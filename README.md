@@ -17,21 +17,15 @@
 
 Many methods exist for probabilistic forecasting. If you are looking for
 impressive probabilistic forecasting package see the list of recommendation at
-the bottom of this README. It is expected that this package may be used as a
-compliment to what is already out there.  
-
-This package does **not** introduce
-new forecasting models. Instead, this package focuses on making existing simple
-forecasting methods accessible.
-
-To often we see that forecast method go in
-production without a naive method to accompany it. In our eyes we see that this
-is a missed opportunity. 
+the bottom of this README. This package is <b>exceptionally ordinary</b>. It is
+expected that this package may be used as a compliment to what is already out
+there.
 
 # Why Run Simple Methods
 
-This package does **not** introduce new forecasting models. It is fantastically ordinary.
 We have found, by experience, many good uses for the methods in this package.
+To often we see that forecast method go in production without a naive method to
+accompany it. In our eyes we see that this is a missed opportunity. 
 
 1. **Naive May Be Good Enough**: Some applications do not need anything more
    impressive than a simple forecasting method.
@@ -39,13 +33,13 @@ We have found, by experience, many good uses for the methods in this package.
    be beat it is good to know the relative improvement over the benchmark. This
    can allow a forecasting team to market their alternative forecast when the
    'skill score' is impressive.
-3. **Easy to productionize and expectations**: Get a sense for how good is good
-   enough. In many applications a forecast team is asked to forecast, but
+3. **Easy to productionize and get expectations**: Get a sense for how good is
+   good enough. In many applications a forecast team is asked to forecast, but
    stakeholders provide no line-in-the-sand for when the forecasting work needs
    to stop. One reasonable approach is to run the benchmarks found in this
    package in beat the best performing benchmark by a margin that is
    statistically significant.
-4. **Resistance in Production - Why not have many models?**: Sometimes, despite
+4. **Resilience in Production - Why not have many models?**: Sometimes, despite
    out best efforts our production model does something unexpected. In this
    case it is nice to have a simple backup that is cheap to generate and good
    enough to fall back on. In this way a production forecast pipeline gains
@@ -148,4 +142,9 @@ forecasting this is a good one to pick.
 1. Read [fpp3](https://otexts.com/fpp3/)
 2. Join the [International Institute of Forecasting](https://forecasters.org/)
    and read their publications.
+
+# Beta
+
+This package is currently being tested. It is very much unfinished at this point.
+Feel free to use what is currently available. 
 
