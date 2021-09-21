@@ -1,0 +1,10 @@
+__pycache__/
+tablespoon/__pycache__/
+tests/__pycache__/
+
+tablespoon/stan/naive
+tablespoon/stan/snaive
+tablespoon/stan/mean
+tablespoon/stan/*.hpp
+tablespoon/stan/out/mean.*
+tablespoon/stan/out/*
