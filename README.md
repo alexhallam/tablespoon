@@ -56,28 +56,29 @@ accompany it. In our eyes we see that this is a missed opportunity.
 
 # Goals of this package
 
-1. **Simplicity**: Not just in the forecasts themselves, but also from the
+1. ♙**Simple**: Not just in the forecasts themselves, but also from the
    users perspective.
-2. **Accessability**: Because of how important we feel simple forecasting
+2. ♝**Documented**: It should be very clear exactly how forecasts are getting
+   generated. We document the parameterization of the models to make this as
+   obvious and uninteresting as possible. See [Forecast Method Documentation](docs/FORECAST_METHODS.md)
+3. ♞**Accessible**: Because of how important we feel simple forecasting
    methods are we want as many front end binding as possible to expose these
    methods to the largest audience possible. We eventually have binding in
    `Shell`,`Julia`,`R`, and `Python`.
-3. **Stability**: We want this package to feel rock solid. For this to happen
+3. ♜**Stable**: We want this package to feel rock solid. For this to happen
    we keep the feature set relatively small. We believe that after the initial 
    development of this package we should spend out time maintaining the code as
    oppose to thinking of new features.
-4. **Distributional Forecasts**: Quantification of uncertainty is the name of
+4. ♛**Distributional**: Quantification of uncertainty is the name of
    the game.
-5. **Documentation**: It should be very clear exactly how forecasts are getting
-   generated. We document the parameterization of the models to make this as
-   obvious and uninteresting as possible.
+
 
 # Non-Goals
 
-1. **Circut Melting Focus on Speed**: Not to say this is a slow package. In fact, all
+1. 🔥**Circut Melting Focus on Speed**: Not to say this is a slow package. In fact, all
    models do get compiled. It is very fast. We just don't put any extra effort to make 
-   it faster than the base stan compiled model.
-2. **New Forecast Models**: Again, this is out of scope. If you are
+   it faster than the base Stan compiled model.
+2. 🤖**New Forecast Models**: Again, this is out of scope. If you are
    looking for recommendations please see the bottom of the page.
 
 # Installation
