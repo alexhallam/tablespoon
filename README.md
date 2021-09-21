@@ -74,8 +74,9 @@ accompany it. In our eyes we see that this is a missed opportunity.
 
 # Non-Goals
 
-1. **Circut Melting Speeds**: Not to say this is a slow package. In fact, all
-   models do get compiled.
+1. **Circut Melting Focus on Speed**: Not to say this is a slow package. In fact, all
+   models do get compiled. It is very fast. We just don't put any extra effort to make 
+   it faster than the base stan compiled model.
 2. **New Forecast Models**: Again, this is out of scope. If you are
    looking for recommendations please see the bottom of the page.
 
