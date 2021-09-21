@@ -5,12 +5,13 @@
 [![Python application](https://github.com/alexhallam/tablespoon/actions/workflows/python-app.yml/badge.svg)](https://github.com/alexhallam/tablespoon/actions/workflows/python-app.yml)
 # Documentation and quick links
 * [Introduction](#introduction)
+* [Quick Example](#quick-example)
 * [Why Run Simple Methods](#why-run-simple-methods)
 * [Goals of this package](#goals-of-this-package)
 * [Non-Goals](#non-goals)
 * [Forecast Method Documentation](docs/FORECAST_METHODS.md)
 * [Installation](#installation)
-* [Quick Example](#quick-example)
+
 * [Recommended probabilistic forecasting packages](#recommended-probabilistic-forecasting-packages)
 * [Learn more about forecasting](#learn-more-about-forecasting)
 
@@ -21,6 +22,41 @@ impressive probabilistic forecasting package see the list of recommendation at
 the bottom of this README. This package is <b>exceptionally ordinary</b>. It is
 expected that this package may be used as a compliment to what is already out
 there.
+
+# Quick Example
+
+We show a quick example below. For more examples see [EXAMPLES.md](docs/EXAMPLES.md)
+
+```python
+import numpy as np
+import pandas as pd
+import tablespoon as tbsp
+from cmdstanpy import install_cmdstan
+
+
+# If this is your first time installing cmdstanpy
+install_cmdstan()
+
+# pull and clean data
+# columns must have the columns "ds" and "y"
+df = (
+    pd.read_csv("https://storage.googleapis.com/data_xvzf/m5_state_sales.csv")
+    .query("state_id == 'CA'")
+    .rename(columns={"date": "ds", "sales": "y"})
+    .assign(y=lambda df: np.log(df.y))
+)
+
+# Snaive model
+sn = tbsp.Snaive()
+df_sn = sn.predict(df, horizon=10, uncertainty_samples = 8000)
+print(df_sn.head())
+
+# Complete Data is Required: Models Error when time series is missing dates 
+n = tbsp.Naive()
+df_missing = df.drop([3])
+df_n = n.predict(df_missing, horizon=10, uncertainty_samples = 8000)
+
+```
 
 # Why Run Simple Methods
 
@@ -87,42 +123,6 @@ accompany it. In our eyes we see that this is a missed opportunity.
 
 ```
 pip3 install tablespoon
-```
-
-# Quick Example
-
-We show a quick example below. For more examples see [EXAMPLES.md](docs/EXAMPLES.md)
-
-```python
-import numpy as np
-import pandas as pd
-import tablespoon as tbsp
-from cmdstanpy import install_cmdstan
-
-
-# If this is your first time installing cmdstanpy
-install_cmdstan()
-
-# pull and clean data
-# columns must have the columns "ds" and "y"
-df = (
-    pd.read_csv("https://storage.googleapis.com/data_xvzf/m5_state_sales.csv")
-    .query("state_id == 'CA'")
-    .rename(columns={"date": "ds", "sales": "y"})
-    .assign(y=lambda df: np.log(df.y))
-)
-
-# Snaive model
-sn = tbsp.Snaive()
-df_sn = sn.predict(df, horizon=10, uncertainty_samples = 8000)
-print(df_sn.head())
-
-# Complete Data is Required: Models Error when time series is missing dates 
-n = tbsp.Naive()
-df_missing = df.drop([3])
-df_n = n.predict(df_missing, horizon=10, uncertainty_samples = 8000)
-print(df_n.head())
-
 ```
 
 # Recommended probabilistic forecasting packages
