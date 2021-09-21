@@ -1,5 +1,5 @@
 <h1 align="center">tablespoon</h1>
-<p align="center"><b>T</b>ime-series <b>B</b>enchmarks methods that are <b>S</b>imple and <b>P</b>robabilistic</p>
+<p align="center"><b>T</b>ime-series <b>B</b>enchmark methods that are <b>S</b>imple and <b>P</b>robabilistic</p>
 
 # Documentation and quick links
 
