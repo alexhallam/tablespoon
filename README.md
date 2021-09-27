@@ -1,8 +1,11 @@
+[![Python application](https://github.com/alexhallam/tablespoon/actions/workflows/python-app.yml/badge.svg)](https://github.com/alexhallam/tablespoon/actions/workflows/python-app.yml)
+
 <h1 align="center">tablespoon</h1>
 <p align="center"><b>T</b>ime-series <b>B</b>enchmark methods that are <b>S</b>imple and <b>P</b>robabilistic</p>
 
-# Build Status
-[![Python application](https://github.com/alexhallam/tablespoon/actions/workflows/python-app.yml/badge.svg)](https://github.com/alexhallam/tablespoon/actions/workflows/python-app.yml)
+<p align="center"><img align="center" src="assets/tbsp_logo.png" width="500" /></p>
+
+
 # Documentation and quick links
 * [Introduction](#introduction)
 * [Quick Example](#quick-example)
