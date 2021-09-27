@@ -128,6 +128,27 @@ accompany it. In our eyes we see that this is a missed opportunity.
 pip3 install tablespoon
 ```
 
+# Citation
+
+If you would like to cite `tablespoon`, please cite it as follows:
+
+Alex Hallam. **tablespoon: Time-series Benchmark methods that are Simple and Probabilistic** https://github.com/alexhallam/tablespoon, 2021. Version 0.1.6.
+
+```
+@misc{tablespoon,
+  author={Alex Hallam},
+  title={{tablespoon}: {Time-series Benchmark methods that are Simple and Probabilistic},
+  howpublished={https://github.com/alexhallam/tablespoon},
+  note={Version 0.1.6,
+  year={2021}
+}
+```
+
+# References
+
+1. Hyndman, R.J., & Athanasopoulos, G. (2021) Forecasting: principles and practice, 3rd edition, OTexts: Melbourne, Australia. OTexts.com/fpp3. Accessed on 2021-09-26.
+2. Stan Development Team. 2021. Stan Modeling Language Users Guide and Reference Manual, 2.27.0. https://mc-stan.org
+
 # Recommended probabilistic forecasting packages
 
 There are many packages that can compliment `tablespoon`
