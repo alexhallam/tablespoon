@@ -2,7 +2,7 @@
 
 <p align="center"> tablespoon </p>
 
-<p align="center">This page may seem redundant with code already present in the repository. That is okay! The goal is to be as clear as possible with how forecasts are being generated. We thought it would be usefull to this single page document of the model parameterizations.</p>
+<p align="center">This page may seem redundant with code already present in the repository. That is okay! The goal is to be as clear as possible with how forecasts are being generated.</p>
 
 # Forecast Methods
 
