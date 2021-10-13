@@ -13,7 +13,7 @@ import cmdstanpy
 import pytest
 
 
-# cmdstanpy.install_cmdstan()
+cmdstanpy.install_cmdstan()
 
 
 # pull and clean data
