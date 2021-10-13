@@ -4,7 +4,7 @@ from tablespoon import __version__
 def test_version():
     assert __version__ == '0.1.0'
 
-# pytest -q tests/test_forecasters.py
+# pytest -q tests/test_tablespoon.py 
 
 import numpy as np
 import pandas as pd
