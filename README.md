@@ -20,7 +20,7 @@
 
 # Introduction
 
-Many methods exist for probabilistic forecasting. If you are looking for
+Many methods exist for probabilistic forecasting. If you are looking for an
 impressive probabilistic forecasting package see the list of recommendation at
 the bottom of this README. This package is <b>exceptionally ordinary</b>. It is
 expected that this package may be used as a compliment to what is already out
@@ -37,11 +37,12 @@ import tablespoon as tbsp
 from cmdstanpy import install_cmdstan
 
 
-# If this is your first time installing cmdstanpy
-install_cmdstan()
+# Run if this is your first time installing cmdstanpy
+# install_cmdstan()
 
 # pull and clean data
 # columns must have the columns "ds" and "y"
+# this time series is at the daily level. the seasonality is 7 days.
 df = (
     pd.read_csv("https://storage.googleapis.com/data_xvzf/m5_state_sales.csv")
     .query("state_id == 'CA'")
@@ -51,21 +52,21 @@ df = (
 
 # Snaive model
 sn = tbsp.Snaive()
-df_sn = sn.predict(df, horizon=10, uncertainty_samples = 8000)
+df_sn = sn.predict(df, horizon=10, frequency="D", lag = 7, uncertainty_samples = 8000)
 print(df_sn.head())
 
 # Complete Data is Required: Models Error when time series is missing dates 
 n = tbsp.Naive()
 df_missing = df.drop([3])
-df_n = n.predict(df_missing, horizon=10, uncertainty_samples = 8000)
+df_n = n.predict(df_missing, horizon=10, frequency="D", lag = 1, uncertainty_samples = 8000)
 
 ```
 
 # Why Run Simple Methods
 
 We have found, by experience, many good uses for the methods in this package.
-To often we see that forecast method go in production without a naive method to
-accompany it. In our eyes we see that this is a missed opportunity. 
+To often we see that forecast methods go in production without a naive method to
+accompany it. This is a missed opportunity.
 
 1. **Naive May Be Good Enough**: Some applications do not need anything more
    impressive than a simple forecasting method.
@@ -139,7 +140,7 @@ Alex Hallam. **tablespoon: Time-series Benchmark methods that are Simple and Pro
   author={Alex Hallam},
   title={{tablespoon}: {Time-series Benchmark methods that are Simple and Probabilistic},
   howpublished={https://github.com/alexhallam/tablespoon},
-  note={Version 0.1.6,
+  note={Version 0.1.8,
   year={2021}
 }
 ```
