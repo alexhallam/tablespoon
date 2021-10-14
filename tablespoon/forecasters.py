@@ -20,6 +20,12 @@ def check_historical_dates_exist(df_historical):
     if df_historical["ds"] is None:
         raise Exception("Please include historical dates and name the columns 'ds'.")
 
+def send_helpful_frequency_error():
+    '''
+    check that frequency argument exists else provide helpfull guidance
+    '''
+    raise Exception("Please specify frequence of data. \n`D`- daily\n`1H` - hourly\n For more frequency aliases see https://pandas.pydata.org/docs/user_guide/timeseries.html#timeseries-offset-aliases")
+
 
 def check_historical_dates_are_contiguous(history_dates, min_date, last_date, frequency):
     '''
@@ -52,7 +58,7 @@ def fit_stan_model(model_name_string, y, lag, uncertainty_samples, horizon, verb
         output_dir=out_dir,
         chains=1,
         seed=42,
-        iter_sampling=uncertainty_samples,
+        iter_sampling=uncertainty_samples
     )
     df_fit = fit.draws_pd()
     df_fit = df_fit.loc[:, df_fit.columns.str.startswith("forecast")]
@@ -80,11 +86,13 @@ class Naive(object):
         self,
         df_historical,
         horizon=30,
-        frequency="D",
+        frequency=None,
         lag=1,
         uncertainty_samples=5000,
         include_history=False,
     ):
+        if frequency is None:
+            send_helpful_frequency_error()
         self.y = df_historical["y"]
         self.history_dates = get_sorted_dates(df_historical)
         last_date = self.history_dates.max()
@@ -128,7 +136,7 @@ class Mean(object):
         self,
         df_historical,
         horizon=30,
-        frequency="D",
+        frequency=None,
         lag=1,
         uncertainty_samples=5000,
         include_history=False,
@@ -176,7 +184,7 @@ class Snaive(object):
         self,
         df_historical,
         horizon=30,
-        frequency="D",
+        frequency=None,
         lag=7,
         uncertainty_samples=5000,
         include_history=False,

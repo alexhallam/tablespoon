@@ -20,7 +20,7 @@
 
 # Introduction
 
-Many methods exist for probabilistic forecasting. If you are looking for
+Many methods exist for probabilistic forecasting. If you are looking for an
 impressive probabilistic forecasting package see the list of recommendation at
 the bottom of this README. This package is <b>exceptionally ordinary</b>. It is
 expected that this package may be used as a compliment to what is already out
@@ -37,11 +37,12 @@ import tablespoon as tbsp
 from cmdstanpy import install_cmdstan
 
 
-# If this is your first time installing cmdstanpy
-install_cmdstan()
+# Run if this is your first time installing cmdstanpy
+# install_cmdstan()
 
 # pull and clean data
 # columns must have the columns "ds" and "y"
+# this time series is at the daily level. the seasonality is 7 days.
 df = (
     pd.read_csv("https://storage.googleapis.com/data_xvzf/m5_state_sales.csv")
     .query("state_id == 'CA'")
@@ -51,13 +52,13 @@ df = (
 
 # Snaive model
 sn = tbsp.Snaive()
-df_sn = sn.predict(df, horizon=10, uncertainty_samples = 8000)
+df_sn = sn.predict(df, horizon=10, frequency="D", uncertainty_samples = 8000)
 print(df_sn.head())
 
 # Complete Data is Required: Models Error when time series is missing dates 
 n = tbsp.Naive()
 df_missing = df.drop([3])
-df_n = n.predict(df_missing, horizon=10, uncertainty_samples = 8000)
+df_n = n.predict(df_missing, horizon=10, frequency="D", uncertainty_samples = 8000)
 
 ```
 
