@@ -52,13 +52,13 @@ df = (
 
 # Snaive model
 sn = tbsp.Snaive()
-df_sn = sn.predict(df, horizon=10, frequency="D", uncertainty_samples = 8000)
+df_sn = sn.predict(df, horizon=10, frequency="D", lag = 7, uncertainty_samples = 8000)
 print(df_sn.head())
 
 # Complete Data is Required: Models Error when time series is missing dates 
 n = tbsp.Naive()
 df_missing = df.drop([3])
-df_n = n.predict(df_missing, horizon=10, frequency="D", uncertainty_samples = 8000)
+df_n = n.predict(df_missing, horizon=10, frequency="D", lag = 1, uncertainty_samples = 8000)
 
 ```
 
