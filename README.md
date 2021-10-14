@@ -65,8 +65,8 @@ df_n = n.predict(df_missing, horizon=10, frequency="D", lag = 1, uncertainty_sam
 # Why Run Simple Methods
 
 We have found, by experience, many good uses for the methods in this package.
-To often we see that forecast method go in production without a naive method to
-accompany it. In our eyes we see that this is a missed opportunity. 
+To often we see that forecast methods go in production without a naive method to
+accompany it. This is a missed opportunity.
 
 1. **Naive May Be Good Enough**: Some applications do not need anything more
    impressive than a simple forecasting method.
@@ -140,7 +140,7 @@ Alex Hallam. **tablespoon: Time-series Benchmark methods that are Simple and Pro
   author={Alex Hallam},
   title={{tablespoon}: {Time-series Benchmark methods that are Simple and Probabilistic},
   howpublished={https://github.com/alexhallam/tablespoon},
-  note={Version 0.1.6,
+  note={Version 0.1.8,
   year={2021}
 }
 ```
