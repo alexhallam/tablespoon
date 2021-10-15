@@ -17,6 +17,6 @@ for(t in lag+1:T)
 generated quantities {
   vector[horizon] forecast;
   for (h in 1:horizon){
-    forecast[h] = normal_rng(y[T-(lag-(h%lag))], sigma*sqrt(trunc((h-1)/(lag)) + 1));
+    forecast[h] = normal_rng(y[T-(lag-(h%lag))], sigma*sqrt(trunc(((h-1)*1)/(lag)) + 1));
   }
 }
