@@ -45,7 +45,7 @@ def check_historical_dates_are_contiguous(history_dates, min_date, last_date, fr
                 " the length of the series is expected to be " + str(len(check_dates)) + ", but " + str(len(history_dates)) + " was found ")
 
 
-def fit_stan_model(model_name_string, y, lag, uncertainty_samples, horizon, verbose=True):
+def fit_stan_model(model_name_string, y, lag, uncertainty_samples, horizon, verbose=True, chain_ids=None):
     '''
     Fit the stan model
     '''
@@ -58,6 +58,7 @@ def fit_stan_model(model_name_string, y, lag, uncertainty_samples, horizon, verb
         output_dir=out_dir,
         chains=1,
         seed=42,
+        chain_ids=None,
         iter_sampling=uncertainty_samples
     )
     df_fit = fit.draws_pd()
