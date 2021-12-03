@@ -57,7 +57,7 @@ def check_historical_dates_are_contiguous(history_dates, min_date, last_date, fr
         )
 
 
-def fit_stan_model(model_name_string, y, lag, uncertainty_samples, horizon, verbose=True, chain_ids=None):
+def fit_stan_model(model_name_string, y, lag, uncertainty_samples, horizon, chain_ids, verbose=True):
     """
     Fit the stan model
     """
@@ -65,7 +65,7 @@ def fit_stan_model(model_name_string, y, lag, uncertainty_samples, horizon, verb
     out_dir = resource_filename("tablespoon", "stan/out")
     model_stan = CmdStanModel(stan_file=stan_model_file)
     cmdstanpy_data = {"horizon": horizon, "T": len(y), "y": y, "lag": lag}
-    fit = model_stan.sample(data=cmdstanpy_data, output_dir=out_dir, chains=1, seed=42, chain_ids=None, iter_sampling=uncertainty_samples)
+    fit = model_stan.sample(data=cmdstanpy_data, output_dir=out_dir, chains=1, seed=42, chain_ids=chain_ids, iter_sampling=uncertainty_samples)
     df_fit = fit.draws_pd()
     df_fit = df_fit.loc[:, df_fit.columns.str.startswith("forecast")]
     if verbose:
