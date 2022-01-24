@@ -31,11 +31,11 @@ there.
 We show a quick example below. For more examples see [EXAMPLES.md](docs/EXAMPLES.md)
 
 ```python
+
 import numpy as np
 import pandas as pd
 import tablespoon as tbsp
 from cmdstanpy import install_cmdstan
-
 
 # Run if this is your first time installing cmdstanpy
 # install_cmdstan()
@@ -55,11 +55,29 @@ sn = tbsp.Snaive()
 df_sn = sn.predict(df, horizon=10, frequency="D", lag = 7, uncertainty_samples = 8000)
 print(df_sn.head())
 
+```
+
+```sh
+>>> print(df_sn.head())
+          ds  rep     y_sim
+0 2016-05-23    0   8.28852
+1 2016-05-23    1  11.09480
+2 2016-05-23    2  10.58620
+3 2016-05-23    3   9.52096
+4 2016-05-23    4  10.55560
+```
+
+```py
 # Complete Data is Required: Models Error when time series is missing dates 
 n = tbsp.Naive()
 df_missing = df.drop([3])
 df_n = n.predict(df_missing, horizon=10, frequency="D", lag = 1, uncertainty_samples = 8000)
+```
 
+```sh
+raise Exception(
+Exception: The series starts on 2011-01-29 00:00:00 and ends on 2016-05-22 00:00:00 the length o
+f the series is expected to be 1941, but 1940 was found
 ```
 
 # Why Run Simple Methods

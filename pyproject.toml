@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tablespoon"
-version = "0.1.12"
+version = "0.1.13"
 description = "Simple probabilistic time series benchmark models"
 authors = ["Alex Hallam <alexhallam6.28@gmail.com>"]
 license = "MIT"
