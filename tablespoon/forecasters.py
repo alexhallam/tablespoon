@@ -1,3 +1,4 @@
+import os
 from pkg_resources import resource_filename
 
 from cmdstanpy import CmdStanModel
@@ -57,12 +58,15 @@ def check_historical_dates_are_contiguous(history_dates, min_date, last_date, fr
         )
 
 
-def fit_stan_model(model_name_string, y, lag, uncertainty_samples, horizon, chain_ids, verbose=True):
+def fit_stan_model(model_name_string, y, lag, uncertainty_samples, horizon, chain_ids, verbose):
     """
     Fit the stan model
     """
     stan_model_file = resource_filename("tablespoon", "stan/" + model_name_string + ".stan")
     out_dir = resource_filename("tablespoon", "stan/out")
+    if not os.path.exists(out_dir):
+        out_dir = os.path.expanduser(out_dir)
+        os.makedirs(out_dir, exist_ok=True)
     model_stan = CmdStanModel(stan_file=stan_model_file)
     cmdstanpy_data = {"horizon": horizon, "T": len(y), "y": y, "lag": lag}
     fit = model_stan.sample(data=cmdstanpy_data, output_dir=out_dir, chains=1, seed=42, chain_ids=chain_ids, iter_sampling=uncertainty_samples)
@@ -96,6 +100,7 @@ class Naive(object):
         uncertainty_samples=5000,
         include_history=False,
         chain_ids=None,
+        verbose=False,
     ):
         if frequency is None:
             send_helpful_frequency_error()
@@ -112,7 +117,7 @@ class Naive(object):
         df_dates = pd.DataFrame({"ds": dates})
         df_samples = pd.DataFrame({"rep": np.arange(uncertainty_samples)})
         df_cross = df_dates.merge(df_samples, how="cross")
-        df_fit = fit_stan_model("naive", self.y, lag, uncertainty_samples, horizon, chain_ids)
+        df_fit = fit_stan_model("naive", self.y, lag, uncertainty_samples, horizon, chain_ids, verbose=verbose)
         np_predictions = df_fit.to_numpy().transpose().reshape(uncertainty_samples * horizon, 1)
         df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
         df_result = pd.concat([df_cross, df_pred], axis=1)
@@ -133,7 +138,7 @@ class Mean(object):
     ):
         self.include_history = include_history
 
-    def predict(self, df_historical, horizon=30, frequency=None, lag=1, uncertainty_samples=5000, include_history=False, chain_ids=None):
+    def predict(self, df_historical, horizon=30, frequency=None, lag=1, uncertainty_samples=5000, include_history=False, chain_ids=None, verbose=False):
         self.y = df_historical["y"]
         self.history_dates = get_sorted_dates(df_historical)
         last_date = self.history_dates.max()
@@ -147,7 +152,7 @@ class Mean(object):
         df_dates = pd.DataFrame({"ds": dates})
         df_samples = pd.DataFrame({"rep": np.arange(uncertainty_samples)})
         df_cross = df_dates.merge(df_samples, how="cross")
-        df_fit = fit_stan_model("mean", self.y, lag, uncertainty_samples, horizon, chain_ids)
+        df_fit = fit_stan_model("mean", self.y, lag, uncertainty_samples, horizon, chain_ids, verbose=verbose)
         np_predictions = df_fit.to_numpy().transpose().reshape(uncertainty_samples * horizon, 1)
         df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
         df_result = pd.concat([df_cross, df_pred], axis=1)
@@ -177,6 +182,7 @@ class Snaive(object):
         uncertainty_samples=5000,
         include_history=False,
         chain_ids=None,
+        verbose=False,
     ):
         self.y = df_historical["y"]
         self.history_dates = get_sorted_dates(df_historical)
@@ -191,7 +197,7 @@ class Snaive(object):
         df_dates = pd.DataFrame({"ds": dates})
         df_samples = pd.DataFrame({"rep": np.arange(uncertainty_samples)})
         df_cross = df_dates.merge(df_samples, how="cross")
-        df_fit = fit_stan_model("snaive", self.y, lag, uncertainty_samples, horizon, chain_ids)
+        df_fit = fit_stan_model("snaive", self.y, lag, uncertainty_samples, horizon, chain_ids, verbose=verbose)
         np_predictions = df_fit.to_numpy().transpose().reshape(uncertainty_samples * horizon, 1)
         df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
         df_result = pd.concat([df_cross, df_pred], axis=1)
