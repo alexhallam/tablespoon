@@ -15,6 +15,7 @@ model {
 generated quantities {
   vector[horizon] forecast;
   for (h in 1:horizon){
-    forecast[h] = student_t_rng(T-1,mean(y),sigma * sqrt(1 + (1/T)));
+    # student_t_rng(nu, mu, sigma)
+    forecast[h] = student_t_rng(T - 1, mean(y), sigma * sqrt(1 + (1 / T)));
   }
 }
