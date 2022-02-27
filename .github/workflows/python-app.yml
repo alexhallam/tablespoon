@@ -5,13 +5,13 @@ name: Python application
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths-ignore:
-      - 'README.md'
+      - "README.md"
   pull_request:
-    branches: [ main ]
+    branches: [main]
     paths-ignore:
-      - 'README.md'
+      - "README.md"
 jobs:
   tests:
     name: ${{ matrix.os }} / ${{ matrix.python-version }}
@@ -80,3 +80,13 @@ jobs:
       - name: Run pytest
         shell: bash
         run: poetry run python -m pytest -p no:sugar -q tests/
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - run: pip install mkdocs-material
+      - run: pip install mkdocstrings
+      - run: mkdocs gh-deploy --force
