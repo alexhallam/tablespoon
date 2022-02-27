@@ -1,3 +1,4 @@
+import logging
 import os
 from pkg_resources import resource_filename
 
@@ -5,6 +6,10 @@ from cmdstanpy import CmdStanModel
 
 import numpy as np
 import pandas as pd
+
+# cmdstanpy natrually generates a lot of logs this is to make those logs quiet unless there is an error
+# https://discourse.mc-stan.org/t/cmdstanpy-not-compiling-with-uninformative-error/25576/7?u=mitzimorris
+logging.getLogger("cmdstanpy").setLevel(logging.ERROR)
 
 
 def get_sorted_dates(df_historical):
@@ -58,7 +63,7 @@ def check_historical_dates_are_contiguous(history_dates, min_date, last_date, fr
         )
 
 
-def fit_stan_model(model_name_string, y, lag, uncertainty_samples, horizon, chain_ids, verbose):
+def fit_stan_model(model_name_string, y, lag: int, uncertainty_samples: int, horizon: int, chain_ids, verbose: bool):
     """
     Fit the stan model
     """
@@ -78,8 +83,10 @@ def fit_stan_model(model_name_string, y, lag, uncertainty_samples, horizon, chai
 
 
 class Naive(object):
-    """
-    Naive Forecaster
+    """Naive Forecaster
+
+    Args:
+        object (None): instantiates a Naive Forecast object
     """
 
     def __init__(
@@ -102,6 +109,21 @@ class Naive(object):
         chain_ids=None,
         verbose=False,
     ):
+        """Predict - forecast method
+
+        Args:
+            df_historical (pd.DataFrame): A date sorted dataframe with the columns `ds` and `y`
+            horizon (int, optional): Forecast horizon. Defaults to 30.
+            frequency (int, optional): number of rows that make a seasonal period. Defaults to None.
+            lag (int, optional): number of rows that make a seasonal period. Defaults to 1.
+            uncertainty_samples (int, optional): number of uncertainty samples to draw. Defaults to 5000.
+            include_history (bool, optional): include history. Defaults to False.
+            chain_ids (str, optional): identifiers for chain ids. Defaults to None.
+            verbose (bool, optional): verbose. Defaults to False.
+
+        Returns:
+            _type_: _description_
+        """
         if frequency is None:
             send_helpful_frequency_error()
         self.y = df_historical["y"]

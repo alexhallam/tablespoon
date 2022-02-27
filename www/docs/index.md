@@ -1,3 +1,9 @@
+---
+title: tablespoon
+keywords: forecast, statistical forecast, probability, probabilistic forecast, uncertainty forecast
+summary: "Forecasting using statistical models"
+description: "Forecasting using statistical models"
+---
 [![Python application](https://github.com/alexhallam/tablespoon/actions/workflows/python-app.yml/badge.svg)](https://github.com/alexhallam/tablespoon/actions/workflows/python-app.yml)
 
 <h1 align="center">tablespoon</h1>
@@ -102,7 +108,6 @@ print(df_sn.head(25))
 23 2022-01-02   23  5.17976  naive
 24 2022-01-02   24  5.15683  naive
 ```
-<p align="center"><img align="center" src="assets/forecasts_n.jpg" width="800" /></p>
 
 
 
