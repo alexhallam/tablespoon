@@ -25,7 +25,7 @@ license = "MIT"
 name = "tablespoon"
 readme = "README.md"
 repository = "https://github.com/alexhallam/tablespoon"
-version = "0.1.21"
+version = "0.1.22"
 
 [tool.poetry.dependencies]
 cmdstanpy = "^0.9.77"

@@ -19,6 +19,6 @@ generated quantities {
   for (h in 1:horizon){
     # `%` is modulus and `%/%` is integer division
     # student_t_rng(nu, mu, sigma)
-    forecast[h] = student_t_rng(T-1, y[T - (lag - (h % lag))], sigma * sqrt(trunc(((h - 1) * 1) %/% (lag)) + 1));
+    forecast[h] = student_t_rng(T-1, y[T - (lag - (h % lag))], sigma * sqrt(trunc(((h - 1) * 1) / (lag)) + 1));
   }
 }
