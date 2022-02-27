@@ -8,6 +8,7 @@ exclude = [
   "tablespoon/stan/naive",
   "tablespoon/stan/snaive",
 ]
+homepage = "https://github.com/alexhallam/tablespoon"
 include = ["docs/EXAMPLES.md", "docs/FORECAST_METHODS.md"]
 keywords = [
   "forecasting",
@@ -24,8 +25,7 @@ license = "MIT"
 name = "tablespoon"
 readme = "README.md"
 repository = "https://github.com/alexhallam/tablespoon"
-homepage = "https://github.com/alexhallam/tablespoon"
-version = "0.1.20"
+version = "0.1.24"
 
 [tool.poetry.dependencies]
 cmdstanpy = "^0.9.77"
