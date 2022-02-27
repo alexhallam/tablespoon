@@ -188,3 +188,8 @@ forecasting this is a good one to pick.
 This package is currently being tested. It is very much unfinished at this point.
 Feel free to use what is currently available. 
 
+# Built with poetry and pushed to pypi
+
+```sh
+poetry publish -u <username> -p <password> --build
+```
