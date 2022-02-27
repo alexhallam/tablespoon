@@ -31,7 +31,6 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
-
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
@@ -89,5 +88,4 @@ jobs:
           python-version: 3.x
       - run: pip install mkdocs-material
       - run: pip install mkdocstrings
-      - run: cd docs
       - run: mkdocs gh-deploy --force
