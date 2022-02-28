@@ -122,7 +122,7 @@ class Naive(object):
             verbose (bool, optional): verbose. Defaults to False.
 
         Returns:
-            _type_: _description_
+            pd.DataFrame: A dataframe of predictions as `y_sim`
         """
         if frequency is None:
             send_helpful_frequency_error()
@@ -161,6 +161,21 @@ class Mean(object):
         self.include_history = include_history
 
     def predict(self, df_historical, horizon=30, frequency=None, lag=1, uncertainty_samples=5000, include_history=False, chain_ids=None, verbose=False):
+        """Predict - forecast method
+
+        Args:
+            df_historical (pd.DataFrame): A date sorted dataframe with the columns `ds` and `y`
+            horizon (int, optional): Forecast horizon. Defaults to 30.
+            frequency (int, optional): number of rows that make a seasonal period. Defaults to None.
+            lag (int, optional): number of rows that make a seasonal period. Defaults to 1.
+            uncertainty_samples (int, optional): number of uncertainty samples to draw. Defaults to 5000.
+            include_history (bool, optional): include history. Defaults to False.
+            chain_ids (str, optional): identifiers for chain ids. Defaults to None.
+            verbose (bool, optional): verbose. Defaults to False.
+
+        Returns:
+            pd.DataFrame: A dataframe of predictions as `y_sim`
+        """
         self.y = df_historical["y"]
         self.history_dates = get_sorted_dates(df_historical)
         last_date = self.history_dates.max()
@@ -206,6 +221,21 @@ class Snaive(object):
         chain_ids=None,
         verbose=False,
     ):
+        """Predict - forecast method
+
+        Args:
+            df_historical (pd.DataFrame): A date sorted dataframe with the columns `ds` and `y`
+            horizon (int, optional): Forecast horizon. Defaults to 30.
+            frequency (int, optional): number of rows that make a seasonal period. Defaults to None.
+            lag (int, optional): number of rows that make a seasonal period. Defaults to 7 (7 days of a week).
+            uncertainty_samples (int, optional): number of uncertainty samples to draw. Defaults to 5000.
+            include_history (bool, optional): include history. Defaults to False.
+            chain_ids (str, optional): identifiers for chain ids. Defaults to None.
+            verbose (bool, optional): verbose. Defaults to False.
+
+        Returns:
+            pd.DataFrame: A dataframe of predictions as `y_sim`
+        """
         self.y = df_historical["y"]
         self.history_dates = get_sorted_dates(df_historical)
         last_date = self.history_dates.max()

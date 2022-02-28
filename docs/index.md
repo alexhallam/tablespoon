@@ -1,10 +1,6 @@
 
-[![Python application](https://github.com/alexhallam/tablespoon/actions/workflows/python-app.yml/badge.svg)](https://github.com/alexhallam/tablespoon/actions/workflows/python-app.yml)
-
 <h1 align="center">tablespoon</h1>
 <p align="center"><b>T</b>ime-series <b>B</b>enchmark methods that are <b>S</b>imple and <b>P</b>robabilistic</p>
-
-<p align="center"><img align="center" src="assets/tbsp.png" width="300" /></p>
 
 
 # Documentation and quick links
@@ -58,53 +54,50 @@ accompany it. This is a missed opportunity.
    distribution of simulated future values and the firm may decide for
    themselves what risks they are or are not willing to take.
 
+
+# Installation
+
+### Python
+
+```
+pip3 install tablespoon
+```
+
 # Quick Example
 
-We show a quick example below. For more examples see [EXAMPLES.md](docs/EXAMPLES.md)
+We show a quick example below. 
+
+For more examples see [Simple Example](https://alexhallam.github.io/tablespoon/section/plotting/), [Extended Example](https://alexhallam.github.io/tablespoon/section/extended/)
 
 ```python
-import pandas as pd
 import tablespoon as tbsp
 from tablespoon.data import APPL
+
 # Uncomment if this is your first time installing cmdstanpy
 # from cmdstanpy import install_cmdstan
 # install_cmdstan()
 
 n = tbsp.Naive()
-df_n = (n.predict(APPL, horizon=7*4, frequency="D", lag = 1, uncertainty_samples = 8000).assign(model = 'naive'))
-print(df_sn.head(25))
+df_n = n.predict(
+    APPL, horizon=7 * 4, frequency="D", lag=1, uncertainty_samples=8000
+).assign(model="naive")
+
+print(df_n.head(10))
 ```
 
 ```sh
-           ds  rep    y_sim  model
-0  2022-01-02    0  5.20006  naive
-1  2022-01-02    1  5.16789  naive
-2  2022-01-02    2  5.17641  naive
-3  2022-01-02    3  5.19340  naive
-4  2022-01-02    4  5.20075  naive
-5  2022-01-02    5  5.17681  naive
-6  2022-01-02    6  5.20302  naive
-7  2022-01-02    7  5.18896  naive
-8  2022-01-02    8  5.19622  naive
-9  2022-01-02    9  5.17469  naive
-10 2022-01-02   10  5.18686  naive
-11 2022-01-02   11  5.16293  naive
-12 2022-01-02   12  5.17006  naive
-13 2022-01-02   13  5.18777  naive
-14 2022-01-02   14  5.18617  naive
-15 2022-01-02   15  5.18752  naive
-16 2022-01-02   16  5.18106  naive
-17 2022-01-02   17  5.17399  naive
-18 2022-01-02   18  5.17950  naive
-19 2022-01-02   19  5.17120  naive
-20 2022-01-02   20  5.18699  naive
-21 2022-01-02   21  5.16781  naive
-22 2022-01-02   22  5.19250  naive
-23 2022-01-02   23  5.17976  naive
-24 2022-01-02   24  5.15683  naive
+          ds  rep    y_sim  model
+0 2022-01-02    0  5.20006  naive
+1 2022-01-02    1  5.16789  naive
+2 2022-01-02    2  5.17641  naive
+3 2022-01-02    3  5.19340  naive
+4 2022-01-02    4  5.20075  naive
+5 2022-01-02    5  5.17681  naive
+6 2022-01-02    6  5.20302  naive
+7 2022-01-02    7  5.18896  naive
+8 2022-01-02    8  5.19622  naive
+9 2022-01-02    9  5.17469  naive
 ```
-
-
 
 # Goals of this package
 
@@ -133,13 +126,7 @@ print(df_sn.head(25))
 2. 🤖**New/Complex Forecast Models**: Again, this is out of scope. If you are
    looking for recommendations please see the bottom of the page.
 
-# Installation
 
-### Python
-
-```
-pip3 install tablespoon
-```
 
 # Citation
 
