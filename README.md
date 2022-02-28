@@ -1,6 +1,9 @@
+[![Python application](https://github.com/alexhallam/tablespoon/actions/workflows/python-app.yml/badge.svg)](https://github.com/alexhallam/tablespoon/actions/workflows/python-app.yml)
 
 <h1 align="center">tablespoon</h1>
 <p align="center"><b>T</b>ime-series <b>B</b>enchmark methods that are <b>S</b>imple and <b>P</b>robabilistic</p>
+
+<p align="center"><img align="center" src="assets/tbsp.png" width="100" /></p>
 
 
 # Documentation and quick links
@@ -56,7 +59,9 @@ accompany it. This is a missed opportunity.
 
 # Quick Example
 
-We show a quick example below. For more examples see [EXAMPLES.md](docs/EXAMPLES.md)
+We show a quick example below. 
+
+For more examples see [Simple Example](https://alexhallam.github.io/tablespoon/section/plotting/), [Extended Example](https://alexhallam.github.io/tablespoon/section/extended/)
 
 ```python
 import tablespoon as tbsp
@@ -97,7 +102,7 @@ print(df_n.head(10))
    users perspective.
 2. ♝**Documented**: It should be very clear exactly how forecasts are getting
    generated. We document the parameterization of the models to make this as
-   obvious and uninteresting as possible. See [Forecast Method Documentation](docs/FORECAST_METHODS.md)
+   obvious and uninteresting as possible. See [Forecast Method Math Documentation](https://alexhallam.github.io/tablespoon/section/math/)
 3. ♜**Stable**: We want this package to feel rock solid. For this to happen
    we keep the feature set relatively small. We believe that after the initial 
    development of this package we should spend out time maintaining the code as
