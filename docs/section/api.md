@@ -1,5 +1,3 @@
-# API
-
 ## ::: tablespoon.forecasters.Naive
     handler: python
     selection:
@@ -54,7 +52,6 @@
       show_source: false
       heading_level: 3
 
-# Data
 
 ## ::: tablespoon.data.APPL
     handler: python
