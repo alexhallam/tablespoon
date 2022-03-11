@@ -1,27 +1,27 @@
 [tool.poetry]
-name = "tablespoon"
-version = "0.1.13"
-description = "Simple probabilistic time series benchmark models"
 authors = ["Alex Hallam <alexhallam6.28@gmail.com>"]
+description = "Simple probabilistic time series benchmark models"
+exclude = ["tablespoon/stan/out/*", "tablespoon/stan/*.hpp", "tablespoon/stan/mean", "tablespoon/stan/naive", "tablespoon/stan/snaive"]
+include = ["docs/EXAMPLES.md", "docs/FORECAST_METHODS.md"]
+keywords = ["forecasting", "forecast", "probabilistic", "naive", "benchmark", "seasonal naive", "mean forecast"]
 license = "MIT"
+name = "tablespoon"
 readme = "README.md"
 repository = "https://github.com/tablespoon"
-keywords = ["forecasting", "forecast", "probabilistic", "naive", "benchmark", "seasonal naive", "mean forecast"]
-exclude = ["tablespoon/stan/out/*","tablespoon/stan/*.hpp","tablespoon/stan/mean","tablespoon/stan/naive","tablespoon/stan/snaive"]
-include = ["docs/EXAMPLES.md","docs/FORECAST_METHODS.md"]
+version = "0.1.14"
 
 [tool.poetry.dependencies]
-python = ">=3.7.1,<3.11"
+cmdstanpy = "^0.9.77"
 numpy = "^1.21.2"
 pandas = "^1.3.2"
-cmdstanpy = "^0.9.77"
 pytest = "^6.2.5"
+python = ">=3.7.1,<3.11"
 
 [tool.poetry.dev-dependencies]
+cmdstanpy = "^0.9.77"
 numpy = "^1.21.2"
 pandas = "^1.3.2"
-cmdstanpy = "^0.9.77"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
