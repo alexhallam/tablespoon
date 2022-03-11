@@ -1,6 +1,10 @@
 from pandas import read_csv
 from io import StringIO
 
+"""
+Data for APPL,WALMART,WALMART_CAL
+"""
+
 APPL = read_csv(
       StringIO(
 """
