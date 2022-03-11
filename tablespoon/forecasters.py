@@ -67,8 +67,8 @@ def fit_stan_model(model_name_string, y, lag, uncertainty_samples, horizon, chai
     with tempfile.TemporaryDirectory() as d:
         temp_dir_file = os.path.join(d, model_name_string + ".stan")
         stan_model_file = resource_filename("tablespoon", "stan/" + model_name_string + ".stan")
-        shutil.copyfile(stan_model_file, d)
-        out_dir = resource_filename(d, "tablespoon", "stan/out")
+        shutil.copyfile(stan_model_file, temp_dir_file)
+        out_dir = os.path.join(d, "stan", "out")
         if not os.path.exists(out_dir):
             out_dir = os.path.expanduser(out_dir)
             os.makedirs(out_dir, exist_ok=True)
