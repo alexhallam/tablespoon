@@ -1,4 +1,6 @@
 import logging
+import shutil
+import tempfile
 import os
 from pkg_resources import resource_filename
 
@@ -67,19 +69,22 @@ def fit_stan_model(model_name_string, y, lag: int, uncertainty_samples: int, hor
     """
     Fit the stan model
     """
-    stan_model_file = resource_filename("tablespoon", "stan/" + model_name_string + ".stan")
-    out_dir = resource_filename("tablespoon", "stan/out")
-    if not os.path.exists(out_dir):
-        out_dir = os.path.expanduser(out_dir)
-        os.makedirs(out_dir, exist_ok=True)
-    model_stan = CmdStanModel(stan_file=stan_model_file)
-    cmdstanpy_data = {"horizon": horizon, "T": len(y), "y": y, "lag": lag}
-    fit = model_stan.sample(data=cmdstanpy_data, output_dir=out_dir, chains=1, seed=42, chain_ids=chain_ids, iter_sampling=uncertainty_samples)
-    df_fit = fit.draws_pd()
-    df_fit = df_fit.loc[:, df_fit.columns.str.startswith("forecast")]
-    if verbose:
-        print(fit.summary())
-    return df_fit
+    with tempfile.TemporaryDirectory() as d:
+        temp_dir_file = os.path.join(d, model_name_string + ".stan")
+        stan_model_file = resource_filename("tablespoon", "stan/" + model_name_string + ".stan")
+        shutil.copyfile(stan_model_file, temp_dir_file)
+        out_dir = os.path.join(d, "stan", "out")
+        if not os.path.exists(out_dir):
+            out_dir = os.path.expanduser(out_dir)
+            os.makedirs(out_dir, exist_ok=True)
+        model_stan = CmdStanModel(stan_file=temp_dir_file)
+        cmdstanpy_data = {"horizon": horizon, "T": len(y), "y": y, "lag": lag}
+        fit = model_stan.sample(data=cmdstanpy_data, output_dir=out_dir, chains=1, seed=42, chain_ids=chain_ids, iter_sampling=uncertainty_samples)
+        df_fit = fit.draws_pd()
+        df_fit = df_fit.loc[:, df_fit.columns.str.startswith("forecast")]
+        if verbose:
+            print(fit.summary())
+        return df_fit
 
 
 class Naive(object):

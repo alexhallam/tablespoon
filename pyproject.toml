@@ -1,31 +1,14 @@
 [tool.poetry]
 authors = ["Alex Hallam <alexhallam6.28@gmail.com>"]
 description = "Simple probabilistic time series benchmark models"
-exclude = [
-  "tablespoon/stan/out/*",
-  "tablespoon/stan/*.hpp",
-  "tablespoon/stan/mean",
-  "tablespoon/stan/naive",
-  "tablespoon/stan/snaive",
-]
-homepage = "https://github.com/alexhallam/tablespoon"
+exclude = ["tablespoon/stan/out/*", "tablespoon/stan/*.hpp", "tablespoon/stan/mean", "tablespoon/stan/naive", "tablespoon/stan/snaive"]
 include = ["docs/EXAMPLES.md", "docs/FORECAST_METHODS.md"]
-keywords = [
-  "forecasting",
-  "forecast",
-  "probabilistic",
-  "naive",
-  "benchmark",
-  "seasonal naive",
-  "mean forecast",
-  "simple",
-  "time series",
-]
+keywords = ["forecasting", "forecast", "probabilistic", "naive", "benchmark", "seasonal naive", "mean forecast"]
 license = "MIT"
 name = "tablespoon"
 readme = "README.md"
-repository = "https://github.com/alexhallam/tablespoon"
-version = "0.1.24"
+repository = "https://github.com/tablespoon"
+version = "0.1.14"
 
 [tool.poetry.dependencies]
 cmdstanpy = "^0.9.77"
