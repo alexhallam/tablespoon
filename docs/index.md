@@ -1,21 +1,6 @@
-[![Python application](https://github.com/alexhallam/tablespoon/actions/workflows/python-app.yml/badge.svg)](https://github.com/alexhallam/tablespoon/actions/workflows/python-app.yml)
 
 <h1 align="center">tablespoon</h1>
 <p align="center"><b>T</b>ime-series <b>B</b>enchmark methods that are <b>S</b>imple and <b>P</b>robabilistic</p>
-
-<p align="center"><img align="center" src="assets/tbsp.png" width="100" /></p>
-
-
-# Documentation and quick links
-* [Introduction](#introduction)
-* [Quick Example](#quick-example)
-* [Why Run Simple Methods](#why-run-simple-methods)
-* [Goals of this package](#goals-of-this-package)
-* [Non-Goals](#non-goals)
-* [Forecast Method Documentation](docs/FORECAST_METHODS.md)
-* [Installation](#installation)
-* [Recommended probabilistic forecasting packages](#recommended-probabilistic-forecasting-packages)
-* [Learn more about forecasting](#learn-more-about-forecasting)
 
 # Introduction
 
@@ -57,6 +42,15 @@ accompany it. This is a missed opportunity.
    distribution of simulated future values and the firm may decide for
    themselves what risks they are or are not willing to take.
 
+
+# Installation
+
+### Python
+
+```
+pip3 install tablespoon
+```
+
 # Quick Example
 
 We show a quick example below. 
@@ -92,9 +86,6 @@ print(df_n.head(10))
 8 2022-01-02    8  5.19622  naive
 9 2022-01-02    9  5.17469  naive
 ```
-<p align="center"><img align="center" src="assets/forecasts_n.jpg" width="800" /></p>
-
-
 
 # Goals of this package
 
@@ -102,7 +93,7 @@ print(df_n.head(10))
    users perspective.
 2. ♝**Documented**: It should be very clear exactly how forecasts are getting
    generated. We document the parameterization of the models to make this as
-   obvious and uninteresting as possible. See [Forecast Method Math Documentation](https://alexhallam.github.io/tablespoon/section/math/)
+   obvious and uninteresting as possible. See [Forecast Method Documentation](docs/FORECAST_METHODS.md)
 3. ♜**Stable**: We want this package to feel rock solid. For this to happen
    we keep the feature set relatively small. We believe that after the initial 
    development of this package we should spend out time maintaining the code as
@@ -123,13 +114,7 @@ print(df_n.head(10))
 2. 🤖**New/Complex Forecast Models**: Again, this is out of scope. If you are
    looking for recommendations please see the bottom of the page.
 
-# Installation
 
-### Python
-
-```
-pip3 install tablespoon
-```
 
 # Citation
 
@@ -142,8 +127,8 @@ Alex Hallam. **tablespoon: Time-series Benchmark methods that are Simple and Pro
   author={Alex Hallam},
   title={{tablespoon}: {Time-series Benchmark methods that are Simple and Probabilistic},
   howpublished={https://github.com/alexhallam/tablespoon},
-  note={Version 0.1.25,
-  year={2022}
+  note={Version 0.1.8,
+  year={2021}
 }
 ```
 
@@ -178,8 +163,3 @@ forecasting this is a good one to pick.
 This package is currently being tested. It is very much unfinished at this point.
 Feel free to use what is currently available. 
 
-# Built with poetry and pushed to pypi
-
-```sh
-poetry publish -u <username> -p <password> --build
-```
