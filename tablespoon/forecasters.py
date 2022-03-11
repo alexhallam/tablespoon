@@ -1,5 +1,6 @@
-import tempfile
+import logging
 import shutil
+import tempfile
 import os
 from pkg_resources import resource_filename
 
