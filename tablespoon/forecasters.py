@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 import tempfile
 import shutil
-=======
-import logging
->>>>>>> main
 import os
 from pkg_resources import resource_filename
 
