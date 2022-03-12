@@ -1,5 +1,4 @@
 
-<h1 align="center">tablespoon</h1>
 <p align="center"><b>T</b>ime-series <b>B</b>enchmark methods that are <b>S</b>imple and <b>P</b>robabilistic</p>
 
 # Introduction
@@ -101,10 +100,6 @@ print(df_n.head(10))
 4. ♞**Distributional**: Quantification of uncertainty is the name of
    the game. Because this uses [Stan](https://mc-stan.org/) in the backend users get access to state of
    of the art numerical sampling.
-3. ♛**Accessible**: Because of how important we feel simple forecasting
-   methods are we want as many front end binding as possible to expose these
-   methods to the largest audience possible. We eventually have binding in
-   `Shell`,`Julia`,`R`, and `Python. (This will come with time)
 
 # Non-Goals
 
