@@ -21,8 +21,9 @@ keywords = [
 license = "MIT"
 name = "tablespoon"
 readme = "README.md"
-repository = "https://github.com/tablespoon"
-version = "0.3.14"
+repository = "https://github.com/alexhallam/tablespoon"
+homepage = "https://alexhallam.github.io/tablespoon/"
+version = "0.3.141"
 
 [tool.poetry.dependencies]
 cmdstanpy = "^0.9.77"
