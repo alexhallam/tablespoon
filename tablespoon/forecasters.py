@@ -8,6 +8,8 @@ from cmdstanpy import CmdStanModel
 
 import numpy as np
 import pandas as pd
+import statsmodels.api as sm
+from scipy.stats import norm
 
 # cmdstanpy natrually generates a lot of logs this is to make those logs quiet unless there is an error
 # https://discourse.mc-stan.org/t/cmdstanpy-not-compiling-with-uninformative-error/25576/7?u=mitzimorris
@@ -112,6 +114,7 @@ class Naive(object):
         uncertainty_samples=5000,
         include_history=False,
         chain_ids=None,
+        use_stan_backend=True, 
         verbose=False,
     ):
         """Predict - forecast method
@@ -124,6 +127,7 @@ class Naive(object):
             uncertainty_samples (int, optional): number of uncertainty samples to draw. Defaults to 5000.
             include_history (bool, optional): include history. Defaults to False.
             chain_ids (str, optional): identifiers for chain ids. Defaults to None.
+            use_stan_backend (bool, optional): chose to use either standard python (False) or stan backend (True)
             verbose (bool, optional): verbose. Defaults to False.
 
         Returns:
@@ -144,10 +148,29 @@ class Naive(object):
         df_dates = pd.DataFrame({"ds": dates})
         df_samples = pd.DataFrame({"rep": np.arange(uncertainty_samples)})
         df_cross = df_dates.merge(df_samples, how="cross")
-        df_fit = fit_stan_model("naive", self.y, lag, uncertainty_samples, horizon, chain_ids, verbose=verbose)
-        np_predictions = df_fit.to_numpy().transpose().reshape(uncertainty_samples * horizon, 1)
-        df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
-        df_result = pd.concat([df_cross, df_pred], axis=1)
+        if use_stan_backend:
+            df_fit = fit_stan_model("naive", self.y, lag, uncertainty_samples, horizon, chain_ids, verbose=verbose)
+            #forecast[1] forecast[2]... forecast[28]
+            np_predictions = df_fit.to_numpy().transpose().reshape(uncertainty_samples * horizon, 1)
+            df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
+            df_result = pd.concat([df_cross, df_pred], axis=1)
+        else:
+            t = lag+1
+            t_lag = t-lag
+            y = self.y
+            end = len(y)-lag
+            yt = y[t:].to_numpy()
+            yt_lag = y[t_lag:end].to_numpy()
+            y_last = self.y[len(y)-1]
+            mod = sm.GLM(yt, yt_lag, family=sm.families.Gaussian())
+            sigma = np.sqrt(mod.fit().scale)
+            rng = np.random.default_rng()
+            forecast = np.empty([uncertainty_samples, horizon])
+            for h in range(0, horizon):
+                forecast[:,h] = y_last + sigma * np.sqrt(h+1) * rng.standard_normal(uncertainty_samples)
+            np_predictions = forecast.transpose().reshape(uncertainty_samples * horizon, 1)
+            df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
+            df_result = pd.concat([df_cross, df_pred], axis=1)
         return df_result
 
 
@@ -165,7 +188,7 @@ class Mean(object):
     ):
         self.include_history = include_history
 
-    def predict(self, df_historical, horizon=30, frequency=None, lag=1, uncertainty_samples=5000, include_history=False, chain_ids=None, verbose=False):
+    def predict(self, df_historical, horizon=30, frequency=None, lag=1, uncertainty_samples=5000, include_history=False, chain_ids=None,use_stan_backend=True, verbose=False):
         """Predict - forecast method
 
         Args:
@@ -176,6 +199,7 @@ class Mean(object):
             uncertainty_samples (int, optional): number of uncertainty samples to draw. Defaults to 5000.
             include_history (bool, optional): include history. Defaults to False.
             chain_ids (str, optional): identifiers for chain ids. Defaults to None.
+            use_stan_backend (bool, optional): chose to use either standard python (False) or stan backend (True)
             verbose (bool, optional): verbose. Defaults to False.
 
         Returns:
@@ -194,10 +218,23 @@ class Mean(object):
         df_dates = pd.DataFrame({"ds": dates})
         df_samples = pd.DataFrame({"rep": np.arange(uncertainty_samples)})
         df_cross = df_dates.merge(df_samples, how="cross")
-        df_fit = fit_stan_model("mean", self.y, lag, uncertainty_samples, horizon, chain_ids, verbose=verbose)
-        np_predictions = df_fit.to_numpy().transpose().reshape(uncertainty_samples * horizon, 1)
-        df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
-        df_result = pd.concat([df_cross, df_pred], axis=1)
+        if use_stan_backend:
+            df_fit = fit_stan_model("mean", self.y, lag, uncertainty_samples, horizon, chain_ids, verbose=verbose)
+            np_predictions = df_fit.to_numpy().transpose().reshape(uncertainty_samples * horizon, 1)
+            df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
+            df_result = pd.concat([df_cross, df_pred], axis=1)
+        else:
+            y = self.y
+            T = len(y)
+            deg_freedom = T - 1
+            mu, sigma = norm.fit(y)
+            rng = np.random.default_rng()
+            forecast = np.empty([uncertainty_samples, horizon])
+            for h in range(0, horizon):
+                forecast[:,h] = mu + sigma * np.sqrt(1 + (1 / T)) * rng.standard_t(df = deg_freedom, size = uncertainty_samples)
+            np_predictions = forecast.transpose().reshape(uncertainty_samples * horizon, 1)
+            df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
+            df_result = pd.concat([df_cross, df_pred], axis=1)
         return df_result
 
 
@@ -224,6 +261,7 @@ class Snaive(object):
         uncertainty_samples=5000,
         include_history=False,
         chain_ids=None,
+        use_stan_backend=True, 
         verbose=False,
     ):
         """Predict - forecast method
@@ -236,6 +274,7 @@ class Snaive(object):
             uncertainty_samples (int, optional): number of uncertainty samples to draw. Defaults to 5000.
             include_history (bool, optional): include history. Defaults to False.
             chain_ids (str, optional): identifiers for chain ids. Defaults to None.
+            use_stan_backend (bool, optional): chose to use either standard python (False) or stan backend (True)
             verbose (bool, optional): verbose. Defaults to False.
 
         Returns:
@@ -254,8 +293,26 @@ class Snaive(object):
         df_dates = pd.DataFrame({"ds": dates})
         df_samples = pd.DataFrame({"rep": np.arange(uncertainty_samples)})
         df_cross = df_dates.merge(df_samples, how="cross")
-        df_fit = fit_stan_model("snaive", self.y, lag, uncertainty_samples, horizon, chain_ids, verbose=verbose)
-        np_predictions = df_fit.to_numpy().transpose().reshape(uncertainty_samples * horizon, 1)
-        df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
-        df_result = pd.concat([df_cross, df_pred], axis=1)
+        if use_stan_backend:
+            df_fit = fit_stan_model("snaive", self.y, lag, uncertainty_samples, horizon, chain_ids, verbose=verbose)
+            np_predictions = df_fit.to_numpy().transpose().reshape(uncertainty_samples * horizon, 1)
+            df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
+            df_result = pd.concat([df_cross, df_pred], axis=1)
+        else:
+            t = lag+1
+            t_lag = t-lag
+            y = self.y
+            end = len(y)-lag
+            yt = y[t:].to_numpy()
+            yt_lag = y[t_lag:end].to_numpy()
+            y_last = self.y[(len(y)-1)-(lag-(horizon%lag))]
+            mod = sm.GLM(yt, yt_lag, family=sm.families.Gaussian())
+            sigma = np.sqrt(mod.fit().scale)
+            rng = np.random.default_rng()
+            forecast = np.empty([uncertainty_samples, horizon])
+            for h in range(0, horizon):
+                forecast[:,h] = y_last + sigma * np.sqrt(np.trunc(((h-1)*1)/(lag)) + 1) * rng.standard_normal(uncertainty_samples)
+            np_predictions = forecast.transpose().reshape(uncertainty_samples * horizon, 1)
+            df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
+            df_result = pd.concat([df_cross, df_pred], axis=1)
         return df_result
