@@ -1,14 +1,13 @@
 import logging
+import os
 import shutil
 import tempfile
-import os
-from pkg_resources import resource_filename
-
-from cmdstanpy import CmdStanModel
 
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
+from cmdstanpy import CmdStanModel
+from pkg_resources import resource_filename
 from scipy.stats import norm
 
 # cmdstanpy natrually generates a lot of logs this is to make those logs quiet unless there is an error
@@ -20,7 +19,9 @@ def get_sorted_dates(df_historical):
     """
     get historical dates and sort them
     """
-    return pd.to_datetime(pd.Series(df_historical["ds"].unique(), name="ds")).sort_values()
+    return pd.to_datetime(
+        pd.Series(df_historical["ds"].unique(), name="ds")
+    ).sort_values()
 
 
 def check_historical_dates_exist(df_historical):
@@ -40,7 +41,9 @@ def send_helpful_frequency_error():
     )
 
 
-def check_historical_dates_are_contiguous(history_dates, min_date, last_date, frequency):
+def check_historical_dates_are_contiguous(
+    history_dates, min_date, last_date, frequency
+):
     """
     check that historical dates are contiguous
     """
@@ -67,13 +70,23 @@ def check_historical_dates_are_contiguous(history_dates, min_date, last_date, fr
         )
 
 
-def fit_stan_model(model_name_string, y, lag: int, uncertainty_samples: int, horizon: int, chain_ids, verbose: bool):
+def fit_stan_model(
+    model_name_string,
+    y,
+    lag: int,
+    uncertainty_samples: int,
+    horizon: int,
+    chain_ids,
+    verbose: bool,
+):
     """
     Fit the stan model
     """
     with tempfile.TemporaryDirectory() as d:
         temp_dir_file = os.path.join(d, model_name_string + ".stan")
-        stan_model_file = resource_filename("tablespoon", "stan/" + model_name_string + ".stan")
+        stan_model_file = resource_filename(
+            "tablespoon", "stan/" + model_name_string + ".stan"
+        )
         shutil.copyfile(stan_model_file, temp_dir_file)
         out_dir = os.path.join(d, "stan", "out")
         if not os.path.exists(out_dir):
@@ -81,7 +94,14 @@ def fit_stan_model(model_name_string, y, lag: int, uncertainty_samples: int, hor
             os.makedirs(out_dir, exist_ok=True)
         model_stan = CmdStanModel(stan_file=temp_dir_file)
         cmdstanpy_data = {"horizon": horizon, "T": len(y), "y": y, "lag": lag}
-        fit = model_stan.sample(data=cmdstanpy_data, output_dir=out_dir, chains=1, seed=42, chain_ids=chain_ids, iter_sampling=uncertainty_samples)
+        fit = model_stan.sample(
+            data=cmdstanpy_data,
+            output_dir=out_dir,
+            chains=1,
+            seed=42,
+            chain_ids=chain_ids,
+            iter_sampling=uncertainty_samples,
+        )
         df_fit = fit.draws_pd()
         df_fit = df_fit.loc[:, df_fit.columns.str.startswith("forecast")]
         if verbose:
@@ -114,7 +134,7 @@ class Naive(object):
         uncertainty_samples=5000,
         include_history=False,
         chain_ids=None,
-        use_stan_backend=True, 
+        use_stan_backend=True,
         verbose=False,
     ):
         """Predict - forecast method
@@ -139,8 +159,12 @@ class Naive(object):
         self.history_dates = get_sorted_dates(df_historical)
         last_date = self.history_dates.max()
         min_date = self.history_dates.min()
-        check_historical_dates_are_contiguous(self.history_dates, min_date, last_date, frequency)
-        dates = pd.date_range(start=last_date, periods=horizon + 1, freq=frequency)  # An extra in case we include start  # 'M','D', etc.
+        check_historical_dates_are_contiguous(
+            self.history_dates, min_date, last_date, frequency
+        )
+        dates = pd.date_range(
+            start=last_date, periods=horizon + 1, freq=frequency
+        )  # An extra in case we include start  # 'M','D', etc.
         dates = dates[dates > last_date]  # Drop start if equals last_date
         dates = dates[:horizon]  # Return correct number of periods
         if include_history:
@@ -149,26 +173,40 @@ class Naive(object):
         df_samples = pd.DataFrame({"rep": np.arange(uncertainty_samples)})
         df_cross = df_dates.merge(df_samples, how="cross")
         if use_stan_backend:
-            df_fit = fit_stan_model("naive", self.y, lag, uncertainty_samples, horizon, chain_ids, verbose=verbose)
-            #forecast[1] forecast[2]... forecast[28]
-            np_predictions = df_fit.to_numpy().transpose().reshape(uncertainty_samples * horizon, 1)
+            df_fit = fit_stan_model(
+                "naive",
+                self.y,
+                lag,
+                uncertainty_samples,
+                horizon,
+                chain_ids,
+                verbose=verbose,
+            )
+            # forecast[1] forecast[2]... forecast[28]
+            np_predictions = (
+                df_fit.to_numpy().transpose().reshape(uncertainty_samples * horizon, 1)
+            )
             df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
             df_result = pd.concat([df_cross, df_pred], axis=1)
         else:
-            t = lag+1
-            t_lag = t-lag
+            t = lag + 1
+            t_lag = t - lag
             y = self.y
-            end = len(y)-lag
+            end = len(y) - lag
             yt = y[t:].to_numpy()
             yt_lag = y[t_lag:end].to_numpy()
-            y_last = self.y[len(y)-1]
+            y_last = self.y[len(y) - 1]
             mod = sm.GLM(yt, yt_lag, family=sm.families.Gaussian())
             sigma = np.sqrt(mod.fit().scale)
             rng = np.random.default_rng()
             forecast = np.empty([uncertainty_samples, horizon])
             for h in range(0, horizon):
-                forecast[:,h] = y_last + sigma * np.sqrt(h+1) * rng.standard_normal(uncertainty_samples)
-            np_predictions = forecast.transpose().reshape(uncertainty_samples * horizon, 1)
+                forecast[:, h] = y_last + sigma * np.sqrt(h + 1) * rng.standard_normal(
+                    uncertainty_samples
+                )
+            np_predictions = forecast.transpose().reshape(
+                uncertainty_samples * horizon, 1
+            )
             df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
             df_result = pd.concat([df_cross, df_pred], axis=1)
         return df_result
@@ -188,7 +226,18 @@ class Mean(object):
     ):
         self.include_history = include_history
 
-    def predict(self, df_historical, horizon=30, frequency=None, lag=1, uncertainty_samples=5000, include_history=False, chain_ids=None,use_stan_backend=True, verbose=False):
+    def predict(
+        self,
+        df_historical,
+        horizon=30,
+        frequency=None,
+        lag=1,
+        uncertainty_samples=5000,
+        include_history=False,
+        chain_ids=None,
+        use_stan_backend=True,
+        verbose=False,
+    ):
         """Predict - forecast method
 
         Args:
@@ -209,8 +258,12 @@ class Mean(object):
         self.history_dates = get_sorted_dates(df_historical)
         last_date = self.history_dates.max()
         min_date = self.history_dates.min()
-        check_historical_dates_are_contiguous(self.history_dates, min_date, last_date, frequency)
-        dates = pd.date_range(start=last_date, periods=horizon + 1, freq=frequency)  # An extra in case we include start  # 'M','D', etc.
+        check_historical_dates_are_contiguous(
+            self.history_dates, min_date, last_date, frequency
+        )
+        dates = pd.date_range(
+            start=last_date, periods=horizon + 1, freq=frequency
+        )  # An extra in case we include start  # 'M','D', etc.
         dates = dates[dates > last_date]  # Drop start if equals last_date
         dates = dates[:horizon]  # Return correct number of periods
         if include_history:
@@ -219,8 +272,18 @@ class Mean(object):
         df_samples = pd.DataFrame({"rep": np.arange(uncertainty_samples)})
         df_cross = df_dates.merge(df_samples, how="cross")
         if use_stan_backend:
-            df_fit = fit_stan_model("mean", self.y, lag, uncertainty_samples, horizon, chain_ids, verbose=verbose)
-            np_predictions = df_fit.to_numpy().transpose().reshape(uncertainty_samples * horizon, 1)
+            df_fit = fit_stan_model(
+                "mean",
+                self.y,
+                lag,
+                uncertainty_samples,
+                horizon,
+                chain_ids,
+                verbose=verbose,
+            )
+            np_predictions = (
+                df_fit.to_numpy().transpose().reshape(uncertainty_samples * horizon, 1)
+            )
             df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
             df_result = pd.concat([df_cross, df_pred], axis=1)
         else:
@@ -231,8 +294,12 @@ class Mean(object):
             rng = np.random.default_rng()
             forecast = np.empty([uncertainty_samples, horizon])
             for h in range(0, horizon):
-                forecast[:,h] = mu + sigma * np.sqrt(1 + (1 / T)) * rng.standard_t(df = deg_freedom, size = uncertainty_samples)
-            np_predictions = forecast.transpose().reshape(uncertainty_samples * horizon, 1)
+                forecast[:, h] = mu + sigma * np.sqrt(1 + (1 / T)) * rng.standard_t(
+                    df=deg_freedom, size=uncertainty_samples
+                )
+            np_predictions = forecast.transpose().reshape(
+                uncertainty_samples * horizon, 1
+            )
             df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
             df_result = pd.concat([df_cross, df_pred], axis=1)
         return df_result
@@ -261,7 +328,7 @@ class Snaive(object):
         uncertainty_samples=5000,
         include_history=False,
         chain_ids=None,
-        use_stan_backend=True, 
+        use_stan_backend=True,
         verbose=False,
     ):
         """Predict - forecast method
@@ -284,8 +351,12 @@ class Snaive(object):
         self.history_dates = get_sorted_dates(df_historical)
         last_date = self.history_dates.max()
         min_date = self.history_dates.min()
-        check_historical_dates_are_contiguous(self.history_dates, min_date, last_date, frequency)
-        dates = pd.date_range(start=last_date, periods=horizon + 1, freq=frequency)  # An extra in case we include start  # 'M','D', etc.
+        check_historical_dates_are_contiguous(
+            self.history_dates, min_date, last_date, frequency
+        )
+        dates = pd.date_range(
+            start=last_date, periods=horizon + 1, freq=frequency
+        )  # An extra in case we include start  # 'M','D', etc.
         dates = dates[dates > last_date]  # Drop start if equals last_date
         dates = dates[:horizon]  # Return correct number of periods
         if include_history:
@@ -294,25 +365,43 @@ class Snaive(object):
         df_samples = pd.DataFrame({"rep": np.arange(uncertainty_samples)})
         df_cross = df_dates.merge(df_samples, how="cross")
         if use_stan_backend:
-            df_fit = fit_stan_model("snaive", self.y, lag, uncertainty_samples, horizon, chain_ids, verbose=verbose)
-            np_predictions = df_fit.to_numpy().transpose().reshape(uncertainty_samples * horizon, 1)
+            df_fit = fit_stan_model(
+                "snaive",
+                self.y,
+                lag,
+                uncertainty_samples,
+                horizon,
+                chain_ids,
+                verbose=verbose,
+            )
+            np_predictions = (
+                df_fit.to_numpy().transpose().reshape(uncertainty_samples * horizon, 1)
+            )
             df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
             df_result = pd.concat([df_cross, df_pred], axis=1)
         else:
-            t = lag+1
-            t_lag = t-lag
+            t = lag + 1
+            t_lag = t - lag
             y = self.y
-            end = len(y)-lag
+            end = len(y) - lag
             yt = y[t:].to_numpy()
             yt_lag = y[t_lag:end].to_numpy()
-            y_last = self.y[(len(y)-1)-(lag-(horizon%lag))]
+            # y_last = self.y[(len(y)-1)-(lag-(horizon%lag))]
             mod = sm.GLM(yt, yt_lag, family=sm.families.Gaussian())
             sigma = np.sqrt(mod.fit().scale)
             rng = np.random.default_rng()
             forecast = np.empty([uncertainty_samples, horizon])
             for h in range(0, horizon):
-                forecast[:,h] = y_last + sigma * np.sqrt(np.trunc(((h-1)*1)/(lag)) + 1) * rng.standard_normal(uncertainty_samples)
-            np_predictions = forecast.transpose().reshape(uncertainty_samples * horizon, 1)
+                forecast[:, h] = self.y[
+                    (len(y)) - (lag - ((h) % lag))
+                ] + sigma * np.sqrt(
+                    np.trunc(((h) * 1) / (lag)) + 1
+                ) * rng.standard_normal(
+                    uncertainty_samples
+                )
+            np_predictions = forecast.transpose().reshape(
+                uncertainty_samples * horizon, 1
+            )
             df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
             df_result = pd.concat([df_cross, df_pred], axis=1)
         return df_result
