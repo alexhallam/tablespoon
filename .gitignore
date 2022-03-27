@@ -8,3 +8,5 @@ tablespoon/stan/mean
 tablespoon/stan/*.hpp
 tablespoon/stan/out/mean.*
 tablespoon/stan/out/*
+*.tar.gz
+*.whl

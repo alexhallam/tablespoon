@@ -305,13 +305,13 @@ class Snaive(object):
             end = len(y)-lag
             yt = y[t:].to_numpy()
             yt_lag = y[t_lag:end].to_numpy()
-            y_last = self.y[(len(y)-1)-(lag-(horizon%lag))]
+            #y_last = self.y[(len(y)-1)-(lag-(horizon%lag))]
             mod = sm.GLM(yt, yt_lag, family=sm.families.Gaussian())
             sigma = np.sqrt(mod.fit().scale)
             rng = np.random.default_rng()
             forecast = np.empty([uncertainty_samples, horizon])
             for h in range(0, horizon):
-                forecast[:,h] = y_last + sigma * np.sqrt(np.trunc(((h-1)*1)/(lag)) + 1) * rng.standard_normal(uncertainty_samples)
+                forecast[:,h] = self.y[(len(y))-(lag-((h)%lag))] + sigma * np.sqrt(np.trunc(((h)*1)/(lag)) + 1) * rng.standard_normal(uncertainty_samples)
             np_predictions = forecast.transpose().reshape(uncertainty_samples * horizon, 1)
             df_pred = pd.DataFrame(np_predictions, columns=["y_sim"])
             df_result = pd.concat([df_cross, df_pred], axis=1)
