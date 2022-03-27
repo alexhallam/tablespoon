@@ -63,6 +63,27 @@ We show a quick example below.
 
 For more examples see [Simple Example](https://alexhallam.github.io/tablespoon/section/plotting/), [Extended Example](https://alexhallam.github.io/tablespoon/section/extended/)
 
+### Seasonal Example: No Stan Backend
+
+In this example I am using fake seasonal data. I also turn off the Stan backend. This 
+comes at the lose of having the No U-Turn sampler, but removes the need to compile the model.
+Since this package is a collection of simple methods it does make sense to allow this option.
+
+```python
+```python
+import tablespoon as tbsp
+from tablespoon.data import SEAS
+
+sn = tbsp.Snaive()
+df_sn = sn.predict(
+    SEAS, horizon=7 * 4, frequency="D", lag=7, uncertainty_samples=8000, use_stan_backend=False
+).assign(model="snaive")
+
+print(df_sn.head(10))
+```
+
+### Stock Prediction
+
 ```python
 import tablespoon as tbsp
 from tablespoon.data import APPL
@@ -93,6 +114,7 @@ print(df_n.head(10))
 9 2022-01-02    9  5.17469  naive
 ```
 <p align="center"><img align="center" src="assets/forecasts_n.jpg" width="800" /></p>
+
 
 
 
