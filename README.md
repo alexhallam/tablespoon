@@ -66,11 +66,11 @@ For more examples see [Simple Example](https://alexhallam.github.io/tablespoon/s
 ### Seasonal Example: No Stan Backend
 
 In this example I am using fake seasonal data. I also turn off the Stan backend. This 
-comes at the lose of having the No U-Turn sampler, but removes the need to compile the model.
+comes at the loss of having the No U-Turn sampler, but removes the need to compile the model.
 Since this package is a collection of simple methods it does make sense to allow this option.
 
 ```python
-```python
+# verify that python > 3.8 is installed to get the latest version of tablespoon from pip
 import tablespoon as tbsp
 from tablespoon.data import SEAS
 
