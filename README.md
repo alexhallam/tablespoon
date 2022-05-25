@@ -66,7 +66,6 @@ For more examples see [Simple Example](https://alexhallam.github.io/tablespoon/s
 ### Seasonal Example
 
 ```python
-# verify that python > 3.8 is installed to get the latest version of tablespoon from pip
 import tablespoon as tbsp
 from tablespoon.data import SEAS
 
