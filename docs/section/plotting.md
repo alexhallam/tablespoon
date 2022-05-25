@@ -1,5 +1,7 @@
 # Simple Example With Plotting
 
+This is a very simple example using some data provided in the `tablespoon` package.
+
 ```python
 import tablespoon as tbsp
 from tablespoon.data import SEAS
