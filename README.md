@@ -66,7 +66,6 @@ For more examples see [Simple Example](https://alexhallam.github.io/tablespoon/s
 ### Seasonal Example
 
 ```python
-# verify that python > 3.8 is installed to get the latest version of tablespoon from pip
 import tablespoon as tbsp
 from tablespoon.data import SEAS
 
@@ -150,7 +149,7 @@ Alex Hallam. **tablespoon: Time-series Benchmark methods that are Simple and Pro
   author={Alex Hallam},
   title={{tablespoon}: {Time-series Benchmark methods that are Simple and Probabilistic},
   howpublished={https://github.com/alexhallam/tablespoon},
-  note={Version 0.1.25,
+  note={Version 0.4.5,
   year={2022}
 }
 ```

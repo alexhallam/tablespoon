@@ -1,6 +1,6 @@
-# 0.4.5
+# 0.4.5 Droping Stan
 
-I love stan, I just don't like the upkeep.
+I love Stan, but I had to drop it as the backend sampler.
 
 A lot of problems were solved as this package was developed. Multiprocessing
 with cmdstanpy folder structures was a big one. As I used this package more
