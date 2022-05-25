@@ -19,7 +19,7 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        os: [Ubuntu, Windows]
+        os: [Ubuntu]
         python-version: [3.7, 3.9]
         experimental: [false]
         bootstrap-args: [""]
