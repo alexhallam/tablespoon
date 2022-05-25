@@ -10,7 +10,6 @@ import numpy as np
 import pandas as pd
 from tablespoon import Naive, Mean, Snaive
 from tablespoon.data import WALMART_TX, SEAS
-import cmdstanpy
 import pytest
 
 
@@ -23,7 +22,6 @@ df_n = n.predict(
     frequency="D",
     lag=7,
     uncertainty_samples=1000,
-    use_stan_backend=False,
 ).assign(model="snaive").loc[:,['ds', 'y_sim']].groupby('ds', as_index=False).mean()
 
 # the following checks that means are withing 5 percent (0.05) of the last week
@@ -59,7 +57,6 @@ df_tx = n.predict(
     frequency="D",
     lag=7,
     uncertainty_samples=1000,
-    use_stan_backend=False,
 ).assign(model="snaive").loc[:,['ds', 'y_sim']].groupby('ds', as_index=False).mean()
 print(df_tx)
 
@@ -95,7 +92,7 @@ df = (
 
 # make lag of 1 default
 m = Naive()
-naive_forecast = m.predict(df, horizon=10, frequency="D", use_stan_backend=False)
+naive_forecast = m.predict(df, horizon=10, frequency="D")
 
 
 def test_naive_2016_06_01_lower():
@@ -113,7 +110,7 @@ def test_naive_2016_06_01_upper():
 
 
 m = Mean()
-mean_forecast = m.predict(df, horizon=10, frequency="D", use_stan_backend=False)
+mean_forecast = m.predict(df, horizon=10, frequency="D")
 round(mean_forecast.query("ds == '2016-06-01'").loc[:, "y_sim"].quantile(q=0.05), 2)
 round(mean_forecast.query("ds == '2016-06-01'").loc[:, "y_sim"].quantile(q=0.95), 2)
 
@@ -133,7 +130,7 @@ def test_mean_2016_06_01_upper():
 
 
 m = Snaive()
-snaive_forecast = m.predict(df, horizon=10, frequency="D", use_stan_backend=False)
+snaive_forecast = m.predict(df, horizon=10, frequency="D")
 round(snaive_forecast.query("ds == '2016-06-01'").loc[:, "y_sim"].quantile(q=0.05), 2)
 round(snaive_forecast.query("ds == '2016-06-01'").loc[:, "y_sim"].quantile(q=0.95), 2)
 

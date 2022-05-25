@@ -1,6 +1,7 @@
 
 <p align="center"><b>T</b>ime-series <b>B</b>enchmark methods that are <b>S</b>imple and <b>P</b>robabilistic</p>
 
+
 # Introduction
 
 Many methods exist for probabilistic forecasting. If you are looking for an
@@ -41,28 +42,32 @@ accompany it. This is a missed opportunity.
    distribution of simulated future values and the firm may decide for
    themselves what risks they are or are not willing to take.
 
-
-# Installation
-
-### Python
-
-```
-pip3 install tablespoon
-```
-
 # Quick Example
 
 We show a quick example below. 
 
 For more examples see [Simple Example](https://alexhallam.github.io/tablespoon/section/plotting/), [Extended Example](https://alexhallam.github.io/tablespoon/section/extended/)
 
+### Seasonal Example
+
+```python
+# verify that python > 3.8 is installed to get the latest version of tablespoon from pip
+import tablespoon as tbsp
+from tablespoon.data import SEAS
+
+sn = tbsp.Snaive()
+df_sn = sn.predict(
+    SEAS, horizon=7 * 4, frequency="D", lag=7, uncertainty_samples=8000
+).assign(model="snaive")
+
+print(df_sn.head(10))
+```
+
+### Stock Prediction
+
 ```python
 import tablespoon as tbsp
 from tablespoon.data import APPL
-
-# Uncomment if this is your first time installing cmdstanpy
-# from cmdstanpy import install_cmdstan
-# install_cmdstan()
 
 n = tbsp.Naive()
 df_n = n.predict(
@@ -85,6 +90,10 @@ print(df_n.head(10))
 8 2022-01-02    8  5.19622  naive
 9 2022-01-02    9  5.17469  naive
 ```
+<p align="center"><img align="center" src="assets/forecasts_n.jpg" width="800" /></p>
+
+
+
 
 # Goals of this package
 
@@ -92,24 +101,28 @@ print(df_n.head(10))
    users perspective.
 2. ♝**Documented**: It should be very clear exactly how forecasts are getting
    generated. We document the parameterization of the models to make this as
-   obvious and uninteresting as possible. See [Forecast Method Documentation](docs/FORECAST_METHODS.md)
+   obvious and uninteresting as possible. See [Forecast Method Math Documentation](https://alexhallam.github.io/tablespoon/section/math/)
 3. ♜**Stable**: We want this package to feel rock solid. For this to happen
    we keep the feature set relatively small. We believe that after the initial 
    development of this package we should spend out time maintaining the code as
    oppose to thinking of new features.
 4. ♞**Distributional**: Quantification of uncertainty is the name of
-   the game. Because this uses [Stan](https://mc-stan.org/) in the backend users get access to state of
-   of the art numerical sampling.
+   the game.
 
 # Non-Goals
 
-1. 🔥**Circut Melting Focus on Speed**: Not to say this is a slow package. In fact, all
-   models do get compiled. It is very fast! We just don't put any extra effort to make 
-   it faster than the `C++` Stan compiled model.
+1. 🔥**Circut Melting Focus on Speed**: Not to say this is a slow package. In fact, it is very fast! 
+   We just don't put any extra effort to make it faster than `numpy`.
 2. 🤖**New/Complex Forecast Models**: Again, this is out of scope. If you are
    looking for recommendations please see the bottom of the page.
 
+# Installation
 
+### Python
+
+```
+pip3 install tablespoon
+```
 
 # Citation
 
@@ -122,15 +135,14 @@ Alex Hallam. **tablespoon: Time-series Benchmark methods that are Simple and Pro
   author={Alex Hallam},
   title={{tablespoon}: {Time-series Benchmark methods that are Simple and Probabilistic},
   howpublished={https://github.com/alexhallam/tablespoon},
-  note={Version 0.1.8,
-  year={2021}
+  note={Version 0.1.25,
+  year={2022}
 }
 ```
 
 # References
 
 1. Hyndman, R.J., & Athanasopoulos, G. (2021) Forecasting: principles and practice, 3rd edition, OTexts: Melbourne, Australia. OTexts.com/fpp3. Accessed on 2021-09-26.
-2. Stan Development Team. 2021. Stan Modeling Language Users Guide and Reference Manual, 2.27.0. https://mc-stan.org
 
 # Recommended probabilistic forecasting packages
 
@@ -158,3 +170,8 @@ forecasting this is a good one to pick.
 This package is currently being tested. It is very much unfinished at this point.
 Feel free to use what is currently available. 
 
+# Built with poetry and pushed to pypi
+
+```sh
+poetry publish -u <username> -p <password> --build
+```

@@ -19,9 +19,6 @@ import tablespoon as tbsp
 from mizani.breaks import date_breaks
 from plotnine import *
 
-# Run if this is your first time installing cmdstanpy
-# from cmdstanpy import install_cmdstan
-# install_cmdstan()
 
 # pull Apple open stock price
 # columns must have the columns "ds" and "y"
