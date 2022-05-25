@@ -63,11 +63,7 @@ We show a quick example below.
 
 For more examples see [Simple Example](https://alexhallam.github.io/tablespoon/section/plotting/), [Extended Example](https://alexhallam.github.io/tablespoon/section/extended/)
 
-### Seasonal Example: No Stan Backend
-
-In this example I am using fake seasonal data. I also turn off the Stan backend. This 
-comes at the loss of having the No U-Turn sampler, but removes the need to compile the model.
-Since this package is a collection of simple methods it does make sense to allow this option.
+### Seasonal Example
 
 ```python
 # verify that python > 3.8 is installed to get the latest version of tablespoon from pip
@@ -76,7 +72,7 @@ from tablespoon.data import SEAS
 
 sn = tbsp.Snaive()
 df_sn = sn.predict(
-    SEAS, horizon=7 * 4, frequency="D", lag=7, uncertainty_samples=8000, use_stan_backend=False
+    SEAS, horizon=7 * 4, frequency="D", lag=7, uncertainty_samples=8000
 ).assign(model="snaive")
 
 print(df_sn.head(10))
@@ -87,10 +83,6 @@ print(df_sn.head(10))
 ```python
 import tablespoon as tbsp
 from tablespoon.data import APPL
-
-# Uncomment if this is your first time installing cmdstanpy
-# from cmdstanpy import install_cmdstan
-# install_cmdstan()
 
 n = tbsp.Naive()
 df_n = n.predict(
@@ -130,14 +122,12 @@ print(df_n.head(10))
    development of this package we should spend out time maintaining the code as
    oppose to thinking of new features.
 4. ♞**Distributional**: Quantification of uncertainty is the name of
-   the game. Because this uses [Stan](https://mc-stan.org/) in the backend users get access to state of
-   of the art numerical sampling.
+   the game.
 
 # Non-Goals
 
-1. 🔥**Circut Melting Focus on Speed**: Not to say this is a slow package. In fact, all
-   models do get compiled. It is very fast! We just don't put any extra effort to make 
-   it faster than the `C++` Stan compiled model.
+1. 🔥**Circut Melting Focus on Speed**: Not to say this is a slow package. In fact, it is very fast! 
+   We just don't put any extra effort to make it faster than `numpy`.
 2. 🤖**New/Complex Forecast Models**: Again, this is out of scope. If you are
    looking for recommendations please see the bottom of the page.
 
@@ -168,7 +158,6 @@ Alex Hallam. **tablespoon: Time-series Benchmark methods that are Simple and Pro
 # References
 
 1. Hyndman, R.J., & Athanasopoulos, G. (2021) Forecasting: principles and practice, 3rd edition, OTexts: Melbourne, Australia. OTexts.com/fpp3. Accessed on 2021-09-26.
-2. Stan Development Team. 2021. Stan Modeling Language Users Guide and Reference Manual, 2.27.0. https://mc-stan.org
 
 # Recommended probabilistic forecasting packages
 
