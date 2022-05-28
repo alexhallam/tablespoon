@@ -31,14 +31,13 @@ We have found, by experience, many good uses for the methods in this package.
 To often we see that forecast methods go in production without a naive method to
 accompany it. This is a missed opportunity.
 
-1. **Naive May Be Good Enough**: Some applications do not need anything more
-   impressive than a simple forecasting method.
+1. **Naive May Be Good Enough**: How good is good enough? I have almost never started a project where the firm receiving the forecast knew the answer to this question, but it is important to get to it early. I think all of us would agree that a forecast error of 0 is best, but in reality how much time should be spent spinning our wheels to get there. Further, many business applications can’t be improved upon even with significant forecast error reduction. I remember hearing a story of a firm which ordered units on pallets. The firm paid by the pallet, not the unit. The forecast team was able to reduce the forecast error, but in the end this did not change the outcome. This is the ‘pallet problem’. As data scientists it is easy to think of error reduction as a continuous function, but this need not map the same way to business value. In this example the continuous error reduction mapped to a discrete pallet. This is a long way of saying, “A naive forecast may be good enough”. What is a naive forecasting method? I typically think of two methods. The mean forecast and the naive forecast. I will go over these in more detail below. There are also some applications where naive methods have been shown to be hard to beat.
 2. **Get A Denominator for Relative Metrics**: Though naive methods can usually
    be beat it is good to know the relative improvement over the benchmark. This
    can allow a forecasting team to market their alternative forecast when the
    'skill score' is impressive.
-3. **Easy to productionize and get expectations**: Get a sense for how good is
-   good enough. In many applications a forecast team is asked to forecast, but
+3. **Easy to productionize and get expectations**: Get a sense for *how good is
+   good enough*. In many applications a forecast team is asked to forecast, but
    stakeholders provide no line-in-the-sand for when the forecasting work needs
    to stop. One reasonable approach is to run the benchmarks found in this
    package in beat the best performing benchmark by a margin that is
@@ -48,7 +47,7 @@ accompany it. This is a missed opportunity.
    case it is nice to have a simple backup that is cheap to generate and good
    enough to fall back on. In this way a production forecast pipeline gains
    strength from a diversity of models.
-5. **Easy Uncertainty Quantification**: More and more we see that application
+5. **Easy Uncertainty Quantification**: More and more we see that applications
    are not about forecast accuracy, but instead about forecasting uncertainty.
    Capturing the full distribution helps firms set "service levels" aka
    percentiles of the distribution for which they are prepared to serve. Even
