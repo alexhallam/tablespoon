@@ -29,7 +29,6 @@ nav:
       - Simple Example: section/plotting.md
       - Extended Example: section/extended.md
       - Skill Score Example: section/skill.md
-      - Parallel Computing Example: section/parallel.md
 
 markdown_extensions:
   - pymdownx.highlight:

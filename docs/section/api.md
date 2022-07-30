@@ -1,14 +1,50 @@
 # API
 
+# Methods
+
+Each forecast class has the `predict` method. The `predict` method for the `Mean` class is shown here as an example of the parameterization. This is the same parameterization for each of the forecast classes.
+
+## ::: tablespoon.forecasters.Mean.predict
+    handler: python
+    selection:
+      members:
+        predict
+    rendering:
+      show_root_heading: true
+      show_source: true
+      heading_level: 2
+
+## ::: tablespoon.forecasters.Naive.predict
+    handler: python
+    selection:
+      members:
+        predict
+    rendering:
+      show_root_heading: true
+      show_source: true
+      heading_level: 2
+
+## ::: tablespoon.forecasters.Snaive.predict
+    handler: python
+    selection:
+      members:
+        predict
+    rendering:
+      show_root_heading: true
+      show_source: true
+      heading_level: 2
+
+# Forecaster Classes
+
 ## ::: tablespoon.forecasters.Naive
     handler: python
     selection:
       members:
         predict
     rendering:
-      show_root_heading: false
-      show_source: false
-      heading_level: 4
+      show_root_heading: true
+      show_source: true
+      heading_level: 2
 
 ## ::: tablespoon.forecasters.Snaive
     handler: python
@@ -16,9 +52,9 @@
       members:
         predict
     rendering:
-      show_root_heading: false
-      show_source: false
-      heading_level: 4
+      show_root_heading: true
+      show_source: true
+      heading_level: 2
 
 ## ::: tablespoon.forecasters.Mean
     handler: python
@@ -26,9 +62,12 @@
       members:
         predict
     rendering:
-      show_root_heading: false
-      show_source: false
-      heading_level: 4
+      show_root_heading: true
+      show_source: true
+      heading_level: 2
+
+
+
 
 # Data
 
@@ -36,40 +75,10 @@
 
 APPL stock price data. A time series data set with non-seasonal patterns
 
-## ::: tablespoon.data.APPL
-    handler: python
-    selection:
-      members:
-        - APPL
-    rendering:
-      show_root_heading: true
-      show_source: false
-      heading_level: 4
-
 ## SEAS
 
 A seasonal time series
 
-## ::: tablespoon.data.SEAS
-    handler: python
-    selection:
-      members:
-        - APPL
-    rendering:
-      show_root_heading: true
-      show_source: false
-      heading_level: 4
-
 ## WALMART
 
 Walmart sales for California from M5. A time series data set with seasonal patterns.
-
-## ::: tablespoon.data.WALMART
-    handler: python
-    selection:
-      members:
-        - APPL
-    rendering:
-      show_root_heading: true
-      show_source: false
-      heading_level: 4
