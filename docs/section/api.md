@@ -46,6 +46,20 @@ APPL stock price data. A time series data set with non-seasonal patterns
       show_source: false
       heading_level: 4
 
+## SEAS
+
+A seasonal time series
+
+## ::: tablespoon.data.SEAS
+    handler: python
+    selection:
+      members:
+        - APPL
+    rendering:
+      show_root_heading: true
+      show_source: false
+      heading_level: 4
+
 ## WALMART
 
 Walmart sales for California from M5. A time series data set with seasonal patterns.

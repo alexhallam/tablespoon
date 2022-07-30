@@ -7,15 +7,22 @@
 
 
 # Documentation and quick links
-* [Introduction](#introduction)
-* [Quick Example](#quick-example)
-* [Why Run Simple Methods](#why-run-simple-methods)
-* [Goals of this package](#goals-of-this-package)
-* [Non-Goals](#non-goals)
-* [Forecast Method Documentation](docs/FORECAST_METHODS.md)
-* [Installation](#installation)
-* [Recommended probabilistic forecasting packages](#recommended-probabilistic-forecasting-packages)
-* [Learn more about forecasting](#learn-more-about-forecasting)
+- [Documentation and quick links](#documentation-and-quick-links)
+- [Introduction](#introduction)
+- [Why Run Simple Methods](#why-run-simple-methods)
+- [Quick Example](#quick-example)
+    - [Seasonal Example](#seasonal-example)
+    - [Stock Prediction](#stock-prediction)
+- [Goals of this package](#goals-of-this-package)
+- [Non-Goals](#non-goals)
+- [Installation](#installation)
+    - [Python](#python)
+- [Citation](#citation)
+- [References](#references)
+- [Recommended probabilistic forecasting packages](#recommended-probabilistic-forecasting-packages)
+- [Learn more about forecasting](#learn-more-about-forecasting)
+- [Beta](#beta)
+- [Built with poetry and pushed to pypi](#built-with-poetry-and-pushed-to-pypi)
 
 # Introduction
 
@@ -40,19 +47,19 @@ accompany it. This is a missed opportunity.
    good enough*. In many applications a forecast team is asked to forecast, but
    stakeholders provide no line-in-the-sand for when the forecasting work needs
    to stop. One reasonable approach is to run the benchmarks found in this
-   package in beat the best performing benchmark by a margin that is
+   package then beat the best performing benchmark by a margin that is
    statistically significant.
 4. **Resilience in Production - Why not have many models?**: Sometimes, despite
-   out best efforts our production model does something unexpected. In this
+   best efforts the production model does something unexpected. In this
    case it is nice to have a simple backup that is cheap to generate and good
    enough to fall back on. In this way a production forecast pipeline gains
    strength from a diversity of models.
-5. **Easy Uncertainty Quantification**: More and more we see that applications
+5. **Easy Uncertainty Quantification**: Recently we see that applications
    are not about forecast accuracy, but instead about forecasting uncertainty.
    Capturing the full distribution helps firms set "service levels" aka
    percentiles of the distribution for which they are prepared to serve. Even
    if you have the worlds most accurate unbiased forecast the median point is
-   an underforecast half the time. For this reason it is best to provide a
+   , by definition, an underforecast half the time. For this reason it is best to provide a
    distribution of simulated future values and the firm may decide for
    themselves what risks they are or are not willing to take.
 
@@ -141,7 +148,7 @@ pip3 install tablespoon
 
 If you would like to cite `tablespoon`, please cite it as follows:
 
-Alex Hallam. **tablespoon: Time-series Benchmark methods that are Simple and Probabilistic** https://github.com/alexhallam/tablespoon, 2021. Version 0.1.6.
+Alex Hallam. **tablespoon: Time-series Benchmark methods that are Simple and Probabilistic** https://github.com/alexhallam/tablespoon, 2021. Version 0.4.5.
 
 ```
 @misc{tablespoon,

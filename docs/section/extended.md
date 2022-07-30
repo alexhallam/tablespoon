@@ -2,7 +2,7 @@
 
 This example includes the following
 
-1. adding midding dates
+1. adding missing dates
 2. forward fill of `NA`
 3. backward fill of `NA`
 4. Using many forecast methods
