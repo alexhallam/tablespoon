@@ -69,6 +69,8 @@ We show a quick example below.
 
 For more examples see [Simple Example](https://alexhallam.github.io/tablespoon/section/plotting/), [Extended Example](https://alexhallam.github.io/tablespoon/section/extended/)
 
+There is also a Notebook/Colab example [here](https://github.com/alexhallam/tablespoon/blob/main/tablespoon.ipynb)
+
 ### Seasonal Example
 
 ```python

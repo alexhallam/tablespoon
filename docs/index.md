@@ -1,3 +1,7 @@
+<div align="center"> <img align="middle" 
+      src="./images/tbsp.png" 
+     width="150" 
+     height="150" /> </div>
 
 <p align="center"><b>T</b>ime-series <b>B</b>enchmark methods that are <b>S</b>imple and <b>P</b>robabilistic</p>
 
@@ -57,8 +61,6 @@ sn = tbsp.Snaive()
 df_sn = sn.predict(
     SEAS, horizon=7 * 4, frequency="D", lag=7, uncertainty_samples=8000
 ).assign(model="snaive")
-
-print(df_sn.head(10))
 ```
 
 ### Stock Prediction
@@ -88,7 +90,7 @@ print(df_n.head(10))
 8 2022-01-02    8  5.19622  naive
 9 2022-01-02    9  5.17469  naive
 ```
-<p align="center"><img align="center" src="assets/forecasts_n.jpg" width="800" /></p>
+<p align="center"><img align="center" src="./images/forecasts_n.jpg" width="800" /></p>
 
 
 
@@ -125,8 +127,6 @@ pip3 install tablespoon
 # Citation
 
 If you would like to cite `tablespoon`, please cite it as follows:
-
-Alex Hallam. **tablespoon: Time-series Benchmark methods that are Simple and Probabilistic** https://github.com/alexhallam/tablespoon, 2021. Version 0.1.6.
 
 ```
 @misc{tablespoon,

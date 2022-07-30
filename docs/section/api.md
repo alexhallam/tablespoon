@@ -1,8 +1,6 @@
-# API
-
 # Methods
 
-Each forecast class has the `predict` method. The `predict` method for the `Mean` class is shown here as an example of the parameterization. This is the same parameterization for each of the forecast classes.
+Each forecast class has the `predict` method. This is the same parameterization for each of the forecast classes.
 
 ## ::: tablespoon.forecasters.Mean.predict
     handler: python
@@ -66,19 +64,16 @@ Each forecast class has the `predict` method. The `predict` method for the `Mean
       show_source: true
       heading_level: 2
 
-
-
-
 # Data
 
-## APPL
+### APPL
 
 APPL stock price data. A time series data set with non-seasonal patterns
 
-## SEAS
+### SEAS
 
 A seasonal time series
 
-## WALMART
+### WALMART
 
 Walmart sales for California from M5. A time series data set with seasonal patterns.
