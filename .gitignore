@@ -10,3 +10,4 @@ tablespoon/stan/out/mean.*
 tablespoon/stan/out/*
 *.tar.gz
 *.whl
+site/

@@ -1,3 +1,3 @@
-# Ignore Jupyter notebook as language
-# *.ipynb linguist-documentation
+# Ignore Jupyter notebook as language and things in the website directory
 *tablespoon.ipynb linguist-vendored
+./site/* linguist-vendored
