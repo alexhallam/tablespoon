@@ -342,6 +342,11 @@
 
 
 
+<div align="center"> <img align="middle" 
+      src="./images/tbsp.png" 
+     width="150" 
+     height="150" /> </div>
+
 <p align="center"><b>T</b>ime-series <b>B</b>enchmark methods that are <b>S</b>imple and <b>P</b>robabilistic</p>
 
 <h1 id="introduction">Introduction</h1>
@@ -391,8 +396,6 @@ accompany it. This is a missed opportunity.</p>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">df_sn</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">SEAS</span><span class="p">,</span> <span class="n">horizon</span><span class="o">=</span><span class="mi">7</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="n">lag</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">uncertainty_samples</span><span class="o">=</span><span class="mi">8000</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">)</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;snaive&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="nb">print</span><span class="p">(</span><span class="n">df_sn</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
 </code></pre></div>
 <h3 id="stock-prediction">Stock Prediction</h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">tablespoon</span> <span class="k">as</span> <span class="nn">tbsp</span>
@@ -417,7 +420,7 @@ accompany it. This is a missed opportunity.</p>
 <a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="m">8</span> <span class="m">2022</span>-01-02    <span class="m">8</span>  <span class="m">5</span>.19622  naive
 <a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="m">9</span> <span class="m">2022</span>-01-02    <span class="m">9</span>  <span class="m">5</span>.17469  naive
 </code></pre></div>
-<p align="center"><img align="center" src="assets/forecasts_n.jpg" width="800" /></p>
+<p align="center"><img align="center" src="./images/forecasts_n.jpg" width="800" /></p>
 
 <h1 id="goals-of-this-package">Goals of this package</h1>
 <ol>
@@ -446,7 +449,6 @@ accompany it. This is a missed opportunity.</p>
 </code></pre></div>
 <h1 id="citation">Citation</h1>
 <p>If you would like to cite <code>tablespoon</code>, please cite it as follows:</p>
-<p>Alex Hallam. <strong>tablespoon: Time-series Benchmark methods that are Simple and Probabilistic</strong> https://github.com/alexhallam/tablespoon, 2021. Version 0.1.6.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>@misc{tablespoon,
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  author={Alex Hallam},
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  title={{tablespoon}: {Time-series Benchmark methods that are Simple and Probabilistic},

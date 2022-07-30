@@ -1,3 +1,7 @@
+<div align="center"> <img align="middle" 
+      src="./images/tbsp.png" 
+     width="150" 
+     height="150" /> </div>
 
 <p align="center"><b>T</b>ime-series <b>B</b>enchmark methods that are <b>S</b>imple and <b>P</b>robabilistic</p>
 

@@ -1,5 +1,3 @@
-# API
-
 # Methods
 
 Each forecast class has the `predict` method. This is the same parameterization for each of the forecast classes.
