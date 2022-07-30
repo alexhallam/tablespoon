@@ -3,6 +3,7 @@ import pandas as pd
 import statsmodels.api as sm
 from scipy.stats import norm
 
+
 def get_sorted_dates(df_historical):
     """
     get historical dates and sort them
@@ -25,7 +26,7 @@ def send_helpful_frequency_error():
     check that frequency argument exists else provide helpfull guidance
     """
     raise Exception(
-        "Please specify frequence of data. \n`D`- daily\n`1H` - hourly\n For more frequency aliases see https://pandas.pydata.org/docs/user_guide/timeseries.html#timeseries-offset-aliases"
+        "Please specify frequency of data. \n`D`- daily\n`1H` - hourly\n For more frequency aliases see https://pandas.pydata.org/docs/user_guide/timeseries.html#timeseries-offset-aliases"
     )
 
 
@@ -56,6 +57,8 @@ def check_historical_dates_are_contiguous(
             + str(len(history_dates))
             + " was found "
         )
+
+
 class Naive(object):
     """Naive Forecaster
 
@@ -95,6 +98,18 @@ class Naive(object):
 
         Returns:
             pd.DataFrame: A dataframe of predictions as `y_sim`
+
+        Example:
+            ```py
+            import pandas as pd
+            import tablespoon as tbsp
+            from tablespoon.data import APPL
+            df_APPLE = APPL
+            df_APPLE = df_APPLE.assign(ds = lambda df: pd.to_datetime(df.ds))
+            naive = tbsp.Naive()
+            df_f = (naive.predict(df_APPLE, horizon=7*4, frequency="D", lag = 1, uncertainty_samples = 500).assign(model = 'naive'))
+            df_f.head(10)
+            ```
         """
         if frequency is None:
             send_helpful_frequency_error()
@@ -175,6 +190,18 @@ class Mean(object):
 
         Returns:
             pd.DataFrame: A dataframe of predictions as `y_sim`
+
+        Example:
+            ```py
+            import pandas as pd
+            import tablespoon as tbsp
+            from tablespoon.data import APPL
+            df_APPLE = APPL
+            df_APPLE = df_APPLE.assign(ds = lambda df: pd.to_datetime(df.ds))
+            mean = tbsp.Mean()
+            df_f = (n.predict(df_APPLE, horizon=7*4, frequency="D", lag = 1, uncertainty_samples = 500).assign(model = 'mean'))
+            df_f.head(10)
+            ```
         """
         self.y = df_historical["y"]
         self.history_dates = get_sorted_dates(df_historical)
@@ -250,6 +277,15 @@ class Snaive(object):
 
         Returns:
             pd.DataFrame: A dataframe of predictions as `y_sim`
+
+        Example:
+            ```py
+            import tablespoon as tbsp
+            from tablespoon.data import SEAS
+            sn = tbsp.Snaive()
+            df_f = sn.predict(SEAS, horizon=7 * 4, frequency="D", lag=7, uncertainty_samples=800).assign(model="snaive")
+            df_f.head(10)
+            ```
         """
         self.y = df_historical["y"]
         self.history_dates = get_sorted_dates(df_historical)
