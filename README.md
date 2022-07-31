@@ -21,7 +21,6 @@
 - [References](#references)
 - [Recommended probabilistic forecasting packages](#recommended-probabilistic-forecasting-packages)
 - [Learn more about forecasting](#learn-more-about-forecasting)
-- [Beta](#beta)
 - [Built with poetry and pushed to pypi](#built-with-poetry-and-pushed-to-pypi)
 
 # Introduction
@@ -69,7 +68,7 @@ We show a quick example below.
 
 For more examples see [Simple Example](https://alexhallam.github.io/tablespoon/section/plotting/), [Extended Example](https://alexhallam.github.io/tablespoon/section/extended/)
 
-There is also a Notebook/Colab example [here](https://github.com/alexhallam/tablespoon/blob/main/tablespoon.ipynb)
+There is also a Notebook/Colab example [here](https://github.com/alexhallam/tablespoon/blob/main/examples/tablespoon.ipynb)
 
 ### Seasonal Example
 
@@ -186,12 +185,7 @@ forecasting this is a good one to pick.
 1. Read [fpp3](https://otexts.com/fpp3/)
 2. Join the [International Institute of Forecasting](https://forecasters.org/)
    and read their publications.
-
-# Beta
-
-This package is currently being tested. It is very much unfinished at this point.
-Feel free to use what is currently available. 
-
+   
 # Built with poetry and pushed to pypi
 
 ```sh

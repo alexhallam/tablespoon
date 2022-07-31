@@ -1,3 +1,4 @@
 # Ignore Jupyter notebook as language and things in the website directory
 *tablespoon.ipynb linguist-vendored
 ./site/* linguist-vendored
+./javascripts/mathjax.js
