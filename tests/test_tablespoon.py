@@ -1,6 +1,6 @@
 from tablespoon import __version__
 
-# For testing locally 
+# For testing locally
 # poetry run python tests/test_tablespoon.py
 
 # For dev run
@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 from tablespoon import Naive, Mean, Snaive
 from tablespoon.data import WALMART_TX, SEAS
+from tablespoon.model_selection import TimeSeriesInitialSplit
 import pytest
 
 
@@ -22,27 +23,41 @@ df_n = n.predict(
     frequency="D",
     lag=7,
     uncertainty_samples=1000,
-).assign(model="snaive").loc[:,['ds', 'y_sim']].groupby('ds', as_index=False).mean()
+).assign(model="snaive").loc[:, ['ds', 'y_sim']].groupby('ds', as_index=False).mean()
 
 # the following checks that means are withing 5 percent (0.05) of the last week
+
+
 def test_snaive_1():
     value = df_n.y_sim[0]
     assert value == pytest.approx(150, 0.05)
+
+
 def test_snaive_2():
     value = df_n.y_sim[1]
     assert value == pytest.approx(250, 0.05)
+
+
 def test_snaive_3():
     value = df_n.y_sim[2]
     assert value == pytest.approx(350, 0.05)
+
+
 def test_snaive_4():
     value = df_n.y_sim[3]
     assert value == pytest.approx(450, 0.05)
+
+
 def test_snaive_5():
     value = df_n.y_sim[4]
     assert value == pytest.approx(550, 0.05)
+
+
 def test_snaive_6():
     value = df_n.y_sim[5]
     assert value == pytest.approx(650, 0.01)
+
+
 def test_snaive_7():
     value = df_n.y_sim[6]
     assert value == pytest.approx(750, 0.01)
@@ -57,30 +72,44 @@ df_tx = n.predict(
     frequency="D",
     lag=7,
     uncertainty_samples=1000,
-).assign(model="snaive").loc[:,['ds', 'y_sim']].groupby('ds', as_index=False).mean()
+).assign(model="snaive").loc[:, ['ds', 'y_sim']].groupby('ds', as_index=False).mean()
 print(df_tx)
+
 
 def test_snaive_tx_1():
     value = df_tx.y_sim[0]
     assert value == pytest.approx(12228, 0.20)
+
+
 def test_snaive_tx_2():
     value = df_tx.y_sim[1]
     assert value == pytest.approx(11370, 0.20)
+
+
 def test_snaive_tx_3():
     value = df_tx.y_sim[2]
     assert value == pytest.approx(10375, 0.20)
+
+
 def test_snaive_tx_4():
     value = df_tx.y_sim[3]
     assert value == pytest.approx(9162, 0.20)
+
+
 def test_snaive_tx_5():
     value = df_tx.y_sim[4]
     assert value == pytest.approx(12303, 0.20)
+
+
 def test_snaive_tx_6():
     value = df_tx.y_sim[5]
     assert value == pytest.approx(13681, 0.20)
+
+
 def test_snaive_tx_7():
     value = df_tx.y_sim[6]
     assert value == pytest.approx(14815, 0.20)
+
 
 # pull and clean data
 df = (
@@ -147,3 +176,11 @@ def test_snaive_2016_06_01_upper():
         snaive_forecast.query("ds == '2016-06-01'").loc[:, "y_sim"].quantile(q=0.95), 2
     )
     assert value == pytest.approx(10.96, 0.3)
+
+
+def test_initial_time_series_split():
+    X = np.arange(0, 30)
+    tscv = TimeSeriesInitialSplit(initial=7 * 3, increment_size=7, gap=0)
+    for train_index, test_index in tscv.split(X):
+        assert len(train_index) == (7 * 3)
+        assert len(test_index) == 7

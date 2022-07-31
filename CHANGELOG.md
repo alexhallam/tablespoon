@@ -1,3 +1,7 @@
+# 0.4.6 Adding TimeSeriesInitialSplit
+
+In this update I added `TimeSeriesInitialSplit`. This will split the data in a convenient way for time series testing.
+
 # 0.4.5 Droping Stan
 
 I love Stan, but I had to drop it as the backend sampler.

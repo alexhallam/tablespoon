@@ -4,33 +4,36 @@ Each forecast class has the `predict` method. This is the same parameterization 
 
 ## ::: tablespoon.forecasters.Mean.predict
     handler: python
-    selection:
-      members:
-        predict
     rendering:
       show_root_heading: true
       show_source: true
-      heading_level: 2
+      heading_level: 4
 
 ## ::: tablespoon.forecasters.Naive.predict
     handler: python
-    selection:
-      members:
-        predict
     rendering:
       show_root_heading: true
       show_source: true
-      heading_level: 2
+      heading_level: 4
 
 ## ::: tablespoon.forecasters.Snaive.predict
     handler: python
-    selection:
-      members:
-        predict
     rendering:
       show_root_heading: true
       show_source: true
-      heading_level: 2
+      heading_level: 4
+
+# CV Class
+
+## ::: tablespoon.model_selection.TimeSeriesInitialSplit
+    handler: python
+    selection:
+      members:
+        split
+    rendering:
+      show_root_heading: true
+      show_source: true
+      heading_level: 4
 
 # Forecaster Classes
 
@@ -42,7 +45,7 @@ Each forecast class has the `predict` method. This is the same parameterization 
     rendering:
       show_root_heading: true
       show_source: true
-      heading_level: 2
+      heading_level: 4
 
 ## ::: tablespoon.forecasters.Snaive
     handler: python
@@ -52,7 +55,7 @@ Each forecast class has the `predict` method. This is the same parameterization 
     rendering:
       show_root_heading: true
       show_source: true
-      heading_level: 2
+      heading_level: 4
 
 ## ::: tablespoon.forecasters.Mean
     handler: python
@@ -62,7 +65,7 @@ Each forecast class has the `predict` method. This is the same parameterization 
     rendering:
       show_root_heading: true
       show_source: true
-      heading_level: 2
+      heading_level: 4
 
 # Data
 
