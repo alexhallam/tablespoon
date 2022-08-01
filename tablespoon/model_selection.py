@@ -38,23 +38,17 @@ class TimeSeriesInitialSplit():
         self.increment_size = increment_size
         self.gap = gap
 
-    def split(self, X, y=None, groups=None):
+    def split(self, X):
         """Generate indices to split data into training and test set.
-        Parameters
-        ----------
-        X : array-like of shape (n_samples, n_features)
-            Training data, where `n_samples` is the number of samples
-            and `n_features` is the number of features.
-        y : array-like of shape (n_samples,)
-            Always ignored, exists for compatibility.
-        groups : array-like of shape (n_samples,)
-            Always ignored, exists for compatibility.
-        Yields
-        ------
-        train : ndarray
-            The training set indices for that split.
-        test : ndarray
-            The testing set indices for that split.
+        Parameters:
+            X : array-like of shape (n_samples, n_features)
+                Training data, where `n_samples` is the number of samples
+                and `n_features` is the number of features.
+        Yields: 
+            train : ndarray
+                The training set indices for that split.
+            test : ndarray
+                The testing set indices for that split.
         """
         n_samples = len(X)
         initial = self.initial

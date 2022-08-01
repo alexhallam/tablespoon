@@ -39,7 +39,7 @@ df_n = tbsp.Naive().predict(
 
 # make alternative forecast
 df_m = tbsp.Mean().predict(
-    train, horizon=7 * 4, frequency="D", lag=1, uncertainty_samples=8000
+    train, horizon=7 * 4, frequency="D", uncertainty_samples=8000
 ).assign(model="mean").assign(ds = lambda df: df.ds.dt.strftime('%Y-%m-%d'))
 
 # join forecasts together and left join with actuals
