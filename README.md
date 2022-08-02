@@ -68,8 +68,9 @@ We show a quick example below.
 
 For more examples see [Simple Example](https://alexhallam.github.io/tablespoon/section/plotting/), [Extended Example](https://alexhallam.github.io/tablespoon/section/extended/)
 
-There is also a Notebook/Colab example [here](https://github.com/alexhallam/tablespoon/blob/main/examples/tablespoon.ipynb)
-
+There are also some Notebook examples
+1. [Intro](https://github.com/alexhallam/tablespoon/blob/main/examples/tablespoon.ipynb)
+2. [Time Series Cross Validation & Skill Score](https://github.com/alexhallam/tablespoon/blob/main/examples/time_series_cv.ipynb)
 ### Seasonal Example
 
 ```python
