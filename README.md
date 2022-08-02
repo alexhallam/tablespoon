@@ -150,14 +150,14 @@ pip3 install tablespoon
 
 If you would like to cite `tablespoon`, please cite it as follows:
 
-Alex Hallam. **tablespoon: Time-series Benchmark methods that are Simple and Probabilistic** https://github.com/alexhallam/tablespoon, 2021. Version 0.4.5.
+Alex Hallam. **tablespoon: Time-series Benchmark methods that are Simple and Probabilistic** https://github.com/alexhallam/tablespoon, 2022. Version 0.4.6.
 
 ```
 @misc{tablespoon,
   author={Alex Hallam},
   title={{tablespoon}: {Time-series Benchmark methods that are Simple and Probabilistic},
   howpublished={https://github.com/alexhallam/tablespoon},
-  note={Version 0.4.5,
+  note={Version 0.4.6,
   year={2022}
 }
 ```
