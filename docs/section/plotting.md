@@ -5,6 +5,9 @@ This is a very simple example using some data provided in the `tablespoon` packa
 ```python
 import tablespoon as tbsp
 from tablespoon.data import SEAS
+from plotnine import *
+import pandas as pd
+from mizani.breaks import date_breaks
 
 sn = tbsp.Snaive()
 df_sn = sn.predict(
