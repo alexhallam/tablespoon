@@ -1,4 +1,12 @@
-__version__ = '0.4.7'
+import importlib.metadata
+
+def get_package_version():
+    try:
+        return importlib.metadata.version("tablespoon")
+    except importlib.metadata.PackageNotFoundError:
+        return None
+
+__version__ = get_package_version()
 
 import pkgutil
 
