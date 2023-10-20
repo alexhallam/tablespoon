@@ -42,7 +42,7 @@ def check_historical_dates_are_contiguous(
         end=last_date,  # An extra in case we include start
         freq=frequency,
     )  # 'M','D', etc.
-    expected_dates = set(check_dates.unique()) - lag
+    expected_dates = set(check_dates.unique())
     given_dates = set(history_dates.unique())
     remaining_dates = expected_dates.difference(given_dates)
     # print(remaining_dates)
