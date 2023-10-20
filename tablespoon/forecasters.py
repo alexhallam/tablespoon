@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 from scipy.stats import norm
-
+import warnings
 
 def get_sorted_dates(df_historical):
     """
@@ -46,7 +46,7 @@ def check_historical_dates_are_contiguous(
     remaining_dates = expected_dates.difference(given_dates)
     # print(remaining_dates)
     if len(check_dates) != len(history_dates):
-        raise Exception(
+        warning_message = (
             "The series starts on "
             + str(min_date)
             + " and ends on "
@@ -57,6 +57,7 @@ def check_historical_dates_are_contiguous(
             + str(len(history_dates))
             + " was found "
         )
+        warnings.warn(warning_message, UserWarning)
 
 
 class Naive(object):
